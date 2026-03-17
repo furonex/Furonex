@@ -55,7 +55,7 @@ const Hero = () => {
       ))}
 
       {/* Clouds */}
-      <Cloud text="Website Development" top="90px" duration={30} />
+      <Cloud text=" Development" top="90px" duration={30} />
       <Cloud text="SEO" top="200px" duration={40} />
       <Cloud text="SMO" top="40px" duration={45} />
       <Cloud text="Digital Marketing" top="360px" duration={55} />
