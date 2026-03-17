@@ -5,6 +5,7 @@ import Hero from "./components/sections/Hero";
 import Services from "./components/sections/Services";
 import Process from "./components/sections/Process";
 import Loader from "./Loader";
+import Contact from "./Pages/Contact";
 
 const App = () => {
 
@@ -26,6 +27,7 @@ const App = () => {
       <Hero/>
       <Services/>
       <Process/>
+      <Contact/>
     </div>
   );
 };
