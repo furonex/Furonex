@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { motion } from "motion/react";
+import { Link, NavLink } from "react-router-dom";
 
 const NavBar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -36,24 +37,46 @@ const NavBar = () => {
       <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between relative z-10">
 
         {/* Logo */}
-        <motion.div
-          whileHover={{ scale: 1.05 }}
-          className="text-2xl font-bold text-[#2F80ED]"
-        >
-          Furonex
-        </motion.div>
+        <Link to="/">
+          <motion.div
+            whileHover={{ scale: 1.05 }}
+            className="text-2xl font-bold text-[#2F80ED]"
+          >
+            Furonex
+          </motion.div>
+        </Link>
 
         {/* Desktop Menu */}
         <ul className="hidden md:flex space-x-8 font-medium">
-          {["Home", "Services", "Portfolio", "About", "Contact"].map((item) => (
-            <motion.li
-              key={item}
-              whileHover={{ scale: 1.1, color: "#2F80ED" }}
-              className="cursor-pointer"
-            >
-              {item}
-            </motion.li>
-          ))}
+          <li>
+            <NavLink to="/" className={({ isActive }) => isActive ? "text-[#2F80ED]" : ""}>
+              Home
+            </NavLink>
+          </li>
+
+          <li>
+            <NavLink to="/services" className={({ isActive }) => isActive ? "text-[#2F80ED]" : ""}>
+              Services
+            </NavLink>
+          </li>
+
+          <li>
+             <NavLink to="/portfolio" className={({ isActive }) => isActive ? "text-[#2F80ED]" : ""}>
+             Portfolio
+             </NavLink>
+          </li>
+
+          <li>
+            <NavLink to="/about" className={({ isActive }) => isActive ? "text-[#2F80ED]" : ""}>
+              About
+            </NavLink>
+          </li>
+
+          <li>
+            <NavLink to="/contact" className={({ isActive }) => isActive ? "text-[#2F80ED]" : ""}>
+              Contact
+            </NavLink>
+          </li>
         </ul>
 
         {/* CTA Button */}
@@ -83,21 +106,19 @@ const NavBar = () => {
           className="md:hidden bg-[#111827] border-t border-gray-700 relative z-10"
         >
           <ul className="flex flex-col items-center py-4 space-y-4">
-            {["Home", "Services", "Portfolio", "About", "Contact"].map(
-              (item) => (
-                <motion.li
-                  key={item}
-                  whileHover={{ scale: 1.1, color: "#2F80ED" }}
-                  className="cursor-pointer"
-                >
-                  {item}
-                </motion.li>
-              )
-            )}
+            <li><Link to="/">Home</Link></li>
+            <li><Link to="/services">Services</Link></li>
+            <li><Link to="/portfolio">Portfolio</Link></li>
+            <li><Link to="/about">About</Link></li>
+            <li><Link to="/contact">Contact</Link></li>
+
             <button className="bg-[#2F80ED] px-5 py-2 rounded-lg">
               Get Quote
             </button>
           </ul>
+
+
+
         </motion.div>
       )}
     </motion.nav>

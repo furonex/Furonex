@@ -11,17 +11,26 @@ const Cloud = ({ text, top, duration }) => {
       animate={{ x: ["110vw", "-120vw"] }}
       transition={{ repeat: Infinity, duration, ease: "linear" }}
     >
-      <div className="relative flex items-center justify-center">
+      <div className="relative flex items-center justify-center blur-[1.5px]">
 
         {/* cloud image */}
         <img
           src={cloud}
           alt="cloud"
-          className="w-52 md:w-64 opacity-70"
+          className="w-52 md:w-44 opacity-70 object-contain"
         />
 
         {/* text */}
-        <span className="absolute text-white font-semibold tracking-wide text-sm md:text-base drop-shadow-lg">
+        <span className="absolute 
+  text-white 
+  font-semibold 
+  tracking-wide 
+  text-[10px] md:text-sm
+  text-center
+  px-3
+  max-w-[80%]
+  leading-tight
+  break-words">
           {text}
         </span>
 
