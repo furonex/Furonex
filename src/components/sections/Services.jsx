@@ -1,6 +1,7 @@
 import React from 'react'
 import { motion } from "motion/react";
 import { Code, Search, Share2, BarChart } from "lucide-react";
+import { Helmet } from 'react-helmet';
 
 const Services = () => {
 
@@ -10,30 +11,39 @@ const Services = () => {
       description:
         "Modern, responsive and scalable websites tailored for your business growth.",
       icon: Code,
+      border:"border-green-400"
     },
     {
       title: "SEO Optimization",
       description:
         "Improve search rankings and organic traffic with strategic SEO solutions.",
       icon: Search,
+      border:"border-yellow-500"
     },
     {
       title: "SMO",
       description:
         "Boost your brand presence across social media platforms and increase engagement.",
       icon: Share2,
+      border:"border-pink-500"
     },
     {
       title: "Digital Marketing",
       description:
         "Data-driven marketing campaigns to grow your online visibility and conversions.",
       icon: BarChart,
+      border:"border-violet-500"
     },
   ];
 
   const stars = Array.from({ length: 18 });
 
   return (
+    <>
+    <Helmet>
+  <title>Website Development & SEO Services | Furonex</title>
+  <meta name="description" content="Explore our website development, SEO, and digital marketing services." />
+</Helmet>
     <section className="relative bg-[#0A0F1C] py-28 px-6 text-white overflow-hidden">
 
       {/* Stars */}
@@ -75,11 +85,13 @@ const Services = () => {
             <motion.div
               key={index}
               whileHover={{ y: -10, scale: 1.03 }}
-              transition={{ duration: 0.3 }}
-              className="bg-[#111827] p-8 rounded-2xl border-[5px] border-gray-800
+              initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: index * 0.1 }}
+              className={`bg-[#111827] p-8 rounded-2xl border-[3px] ${service.border}
               hover:border-[#2F80ED]
               hover:shadow-[0_0_35px_rgba(47,128,237,0.4)]
-              transition-all duration-300"
+              transition-all duration-300`}
             >
 
               {/* Icon */}
@@ -105,6 +117,8 @@ const Services = () => {
 
       </div>
     </section>
+
+    </>
   );
 }
 

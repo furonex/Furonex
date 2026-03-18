@@ -4,31 +4,8 @@ const Portfolio = () => {
 
   const stars = Array.from({ length: 20 });
 
-  const projects = [
-    {
-      title: "Hotel Booking Platform",
-      description: "A full-stack hotel booking web application with modern UI.",
-      image: "/projects/hotel.png",
-    },
-    {
-      title: "Corporate Landing Page",
-      description: "Modern business landing page designed for conversions.",
-      image: "/projects/corporate.png",
-    },
-    {
-      title: "E-commerce Website",
-      description: "Scalable e-commerce platform with product management.",
-      image: "/projects/ecommerce.png",
-    },
-    {
-      title: "Portfolio Website",
-      description: "Personal portfolio website built using React and Tailwind.",
-      image: "/projects/portfolio.png",
-    },
-  ];
-
   return (
-    <section className="relative bg-[#0A0F1C] py-28 px-6 text-white overflow-hidden">
+    <section className="relative min-h-screen bg-[#0A0F1C] flex flex-col items-center justify-center text-white px-6 overflow-hidden">
 
       {/* Stars */}
       {stars.map((_, i) => (
@@ -47,58 +24,33 @@ const Portfolio = () => {
         />
       ))}
 
-      {/* Section Heading */}
-      <div className="max-w-6xl mx-auto text-center mb-20 relative z-10">
-        <h2 className="text-4xl md:text-5xl font-bold mb-4">
-          Our Work
-        </h2>
+      {/* Content */}
+      <motion.div
+        initial={{ opacity: 0, y: 40 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8 }}
+        className="text-center relative z-10"
+      >
 
-        <p className="text-gray-400 max-w-xl mx-auto">
-          Explore some of the projects we’ve built to help businesses grow
-          through technology.
+        {/* Title */}
+        <h1 className="text-4xl md:text-6xl font-bold mb-6">
+          Portfolio
+        </h1>
+
+        {/* Coming Soon */}
+        <p className="text-gray-400 text-lg mb-6">
+          Our work is on the way 🚀
         </p>
-      </div>
 
-      {/* Project Grid */}
-      <div className="max-w-6xl mx-auto grid md:grid-cols-2 lg:grid-cols-4 gap-8 relative z-10">
+        <motion.div
+          animate={{ opacity: [0.5, 1, 0.5] }}
+          transition={{ duration: 2, repeat: Infinity }}
+          className="text-[#2F80ED] text-2xl font-semibold"
+        >
+          Coming Soon...
+        </motion.div>
 
-        {projects.map((project, index) => (
-          <motion.div
-            key={index}
-            whileHover={{ y: -12, scale: 1.03 }}
-            transition={{ duration: 0.3 }}
-            className="bg-[#111827] rounded-2xl border border-gray-800 overflow-hidden
-            hover:border-[#2F80ED]
-            hover:shadow-[0_0_40px_rgba(47,128,237,0.4)]
-            transition-all duration-300"
-          >
-
-            {/* Image */}
-            <div className="h-44 overflow-hidden">
-              <img
-                src={project.image}
-                alt={project.title}
-                className="w-full h-full object-cover hover:scale-110 transition duration-500"
-              />
-            </div>
-
-            {/* Content */}
-            <div className="p-6 text-center">
-
-              <h3 className="text-lg font-semibold mb-2">
-                {project.title}
-              </h3>
-
-              <p className="text-gray-400 text-sm">
-                {project.description}
-              </p>
-
-            </div>
-
-          </motion.div>
-        ))}
-
-      </div>
+      </motion.div>
 
     </section>
   );
