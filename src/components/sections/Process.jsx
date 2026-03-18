@@ -75,7 +75,7 @@ const Process = () => {
               key={index}
               whileHover={{ y: -10, scale: 1.05 }}
               transition={{ duration: 0.3 }}
-              className="bg-[#111827] p-8 rounded-2xl border border-gray-800
+              className="bg-[#111827] p-8 rounded-2xl border-[5px] border-gray-800
               hover:border-[#2F80ED]
               hover:shadow-[0_0_35px_rgba(47,128,237,0.4)]
               transition-all duration-300 text-center"

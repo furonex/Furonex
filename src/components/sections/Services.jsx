@@ -66,7 +66,7 @@ const Services = () => {
       </div>
 
       {/* Services Grid */}
-      <div className="max-w-6xl mx-auto grid md:grid-cols-2 lg:grid-cols-4 gap-8 relative z-10">
+      <div className="max-w-6xl  mx-auto grid md:grid-cols-2 lg:grid-cols-4 gap-8 relative z-10">
 
         {services.map((service, index) => {
           const Icon = service.icon;
@@ -76,7 +76,7 @@ const Services = () => {
               key={index}
               whileHover={{ y: -10, scale: 1.03 }}
               transition={{ duration: 0.3 }}
-              className="bg-[#111827] p-8 rounded-2xl border border-gray-800
+              className="bg-[#111827] p-8 rounded-2xl border-[5px] border-gray-800
               hover:border-[#2F80ED]
               hover:shadow-[0_0_35px_rgba(47,128,237,0.4)]
               transition-all duration-300"
