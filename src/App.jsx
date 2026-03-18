@@ -4,14 +4,11 @@ import NavBar from "./components/Layout/NavBar";
 import Services from "./components/sections/Services";
 import Loader from "./Loader";
 import Contact from "./Pages/Contact";
-<<<<<<< HEAD
-=======
 import { Route, Routes } from "react-router-dom";
 import Home from "./Pages/Home";
 import About from "./Pages/About"
 import Portfolio from "./Pages/Portfolio";
 import Footer from "./components/Layout/Footer";
->>>>>>> dev
 
 const App = () => {
 
@@ -29,13 +26,6 @@ const App = () => {
 
   return (
     <div className='bg-[#141f3b] w-full min-h-screen pl-2 pr-2 pt-2 pb-2 space-y-2'>
-<<<<<<< HEAD
-      <NavBar/>
-      <Hero/>
-      <Services/>
-      <Process/>
-      <Contact/>
-=======
      <NavBar/>
 
      <Routes>
@@ -46,7 +36,6 @@ const App = () => {
       <Route path="/portfolio" element={<Portfolio />} />
      </Routes>
        <Footer/>
->>>>>>> dev
     </div>
   );
 };
