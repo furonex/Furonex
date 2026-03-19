@@ -85,7 +85,7 @@ const NavBar = () => {
           whileTap={{ scale: 0.95 }}
           className="hidden md:block bg-[#2F80ED] hover:bg-blue-600 px-5 py-2 rounded-lg font-semibold transition"
         >
-          Get Quote
+          <Link to="/contact">Get Quote</Link>
         </motion.button>
 
         {/* Mobile Menu Button */}
@@ -113,7 +113,8 @@ const NavBar = () => {
             <li><Link to="/contact">Contact</Link></li>
 
             <button className="bg-[#2F80ED] px-5 py-2 rounded-lg">
-              Get Quote
+              <Link to="/contact">Get Quote</Link>
+              
             </button>
           </ul>
 

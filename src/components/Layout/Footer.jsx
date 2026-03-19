@@ -44,9 +44,10 @@ const Footer = () => {
       </div>
 
       {/* CONTENT */}
-      <div className="relative z-10 max-w-7xl mx-auto grid md:grid-cols-4 gap-10 mt-6 md:mt-[75px]">
+      <div className="relative z-10 max-w-7xl mx-auto grid md:grid-cols-4 gap-10 mt-6 ml-10 md:mt-[105px]">
 
         {/* 1️⃣ Brand */}
+       
         <div>
           <h2 className="text-2xl font-bold text-[#2F80ED] mb-4">
             Furonex
@@ -65,7 +66,7 @@ const Footer = () => {
         </div>
 
         {/* 2️⃣ Navigation */}
-        <div>
+        <div className="ml-12">
           <h3 className="font-semibold mb-4">Pages</h3>
           <ul className="space-y-2 text-gray-400 text-sm">
             <li className="hover:text-white cursor-pointer">Home</li>
@@ -76,22 +77,42 @@ const Footer = () => {
           </ul>
         </div>
 
-        {/* 3️⃣ Instagram Feed */}
-        <div>
-          <h3 className="font-semibold mb-4">Latest Update</h3>
+       
+        {/* 3️⃣ Location Map */}
+<div>
+  <h3 className="font-semibold mb-4">Our Location</h3>
 
-          <div className="bg-[#111827] p-4 rounded-xl border border-gray-800 text-sm text-gray-400">
-            🚀 New project launched!
-            <br />
-            <a
-              href="#"
-              className="text-[#2F80ED] text-xs underline"
-              target="_blank"
-            >
-              View on Instagram
-            </a>
-          </div>
-        </div>
+  {/* Clickable Map Box */}
+  <a
+    href="https://www.google.com/maps?q=Ghaziabad+India"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="block"
+  >
+    <motion.div
+      whileHover={{ scale: 1.03 }}
+      className="bg-[#111827] rounded-xl border border-gray-800 overflow-hidden cursor-pointer"
+    >
+
+      {/* Embedded Map */}
+      <iframe
+        title="location"
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d875.0217569799673!2d77.40548456953432!3d28.68704317496805!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390cf05f58940151%3A0xf4a99c8a8af4c54d!2sExcel%20School!5e0!3m2!1sen!2sus!4v1773942591684!5m2!1sen!2sus"
+        className="w-full h-40 border-0"
+        loading="lazy"
+      />
+
+      {/* Overlay Text */}
+      <div className="p-3 text-sm text-gray-400">
+        📍 Ghaziabad, India  
+        <span className="text-[#2F80ED] block text-xs mt-1">
+          Open in Google Maps →
+        </span>
+      </div>
+
+    </motion.div>
+  </a>
+</div>
 
         {/* 4️⃣ Newsletter */}
         <div>
