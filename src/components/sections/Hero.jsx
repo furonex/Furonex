@@ -2,6 +2,7 @@ import { motion } from 'motion/react'
 import React from 'react'
 import astronaut from "../../assets/astronaut.png"
 import cloud from "../../assets/cloud.png"
+import moon from "../../assets/moon.png"
 
 const Cloud = ({ text, top, duration }) => {
   return (
@@ -100,21 +101,17 @@ const Hero = () => {
 
         {/* Moon */}
         <motion.div
-          animate={{ scale: [1, 1.05, 1] }}
-          transition={{ repeat: Infinity, duration: 6 }}
-          className="relative w-72 h-72 rounded-full 
-  bg-gradient-to-br from-gray-100 to-gray-300
-  shadow-[0_0_120px_rgba(47,128,237,0.8)] overflow-hidden"
-        >
-
-          {/* Moon Craters */}
-          <div className="absolute w-10 h-10 bg-gray-400/40 rounded-full top-10 left-16 blur-[1px]" />
-          <div className="absolute w-8 h-8 bg-gray-500/30 rounded-full top-24 right-20 blur-[1px]" />
-          <div className="absolute w-6 h-6 bg-gray-500/30 rounded-full bottom-20 left-20 blur-[1px]" />
-          <div className="absolute w-12 h-12 bg-gray-400/30 rounded-full bottom-10 right-16 blur-[1px]" />
-          <div className="absolute w-7 h-7 bg-gray-500/30 rounded-full top-36 left-32 blur-[1px]" />
-
-        </motion.div>
+  animate={{ scale: [1, 1.05, 1] }}
+  transition={{ repeat: Infinity, duration: 6 }}
+  className="relative w-72 h-72 flex items-center justify-center"
+>
+  <img
+    src={moon}
+    alt="moon"
+    className="w-full h-full object-contain 
+    drop-shadow-[0_0_80px_rgba(47,128,237,0.6)]"
+  />
+</motion.div>
 
       </div>
 
