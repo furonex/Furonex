@@ -9,6 +9,7 @@ import Home from "./Pages/Home";
 import About from "./Pages/About"
 import Portfolio from "./Pages/Portfolio";
 import Footer from "./components/Layout/Footer";
+import StarCursor from "./components/StarCursor";
 
 const App = () => {
 
@@ -27,7 +28,7 @@ const App = () => {
   return (
     <div className='bg-[#141f3b] w-full min-h-screen pl-2 pr-2 pt-2 pb-2 space-y-2'>
      <NavBar/>
-
+     <StarCursor/>
      <Routes>
       <Route path="/"  element={<Home/>}/>
       <Route path="/about"  element={<About/>}/>
