@@ -3,6 +3,7 @@ import React from 'react'
 import astronaut from "../../assets/astronaut.png"
 import cloud from "../../assets/cloud.png"
 import moon from "../../assets/moon.png"
+import satellite from "../../assets/satellite.png";
 
 const Cloud = ({ text, top, duration }) => {
   return (
@@ -100,17 +101,48 @@ const Hero = () => {
         </motion.h1>
 
         {/* Moon */}
-        <motion.div
+       <motion.div
   animate={{ scale: [1, 1.05, 1] }}
   transition={{ repeat: Infinity, duration: 6 }}
   className="relative w-72 h-72 flex items-center justify-center"
 >
+
+  {/* Moon */}
   <img
     src={moon}
     alt="moon"
     className="w-full h-full object-contain 
     drop-shadow-[0_0_80px_rgba(47,128,237,0.6)]"
   />
+
+  {/* Orbit Container */}
+  <motion.div
+    className="absolute w-[130%] h-[130%] border border-white/10 rounded-full"
+    animate={{ rotate: 360 }}
+    transition={{
+      repeat: Infinity,
+      duration: 12,
+      ease: "linear",
+    }}
+  >
+
+    {/* Satellite */}
+    <div className="absolute -top-4 left-1/2 -translate-x-1/2">
+      <motion.img
+        src={satellite}
+        alt="satellite"
+        className="w-10 md:w-12"
+        animate={{ rotate: -360 }} // keeps it upright
+        transition={{
+          repeat: Infinity,
+          duration: 12,
+          ease: "linear",
+        }}
+      />
+    </div>
+
+  </motion.div>
+
 </motion.div>
 
       </div>

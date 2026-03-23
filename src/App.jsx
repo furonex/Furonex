@@ -10,6 +10,7 @@ import About from "./Pages/About"
 import Portfolio from "./Pages/Portfolio";
 import Footer from "./components/Layout/Footer";
 import StarCursor from "./components/StarCursor";
+import Pricing from "./Pages/Pricing";
 
 const App = () => {
 
@@ -35,6 +36,7 @@ const App = () => {
       <Route path="/contact"  element={<Contact/>}/>
       <Route path="/services"  element={<Services/>}/>
       <Route path="/portfolio" element={<Portfolio />} />
+      <Route path="/pricing" element={<Pricing />} />
      </Routes>
        <Footer/>
     </div>
