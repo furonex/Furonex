@@ -11,6 +11,7 @@ import Portfolio from "./Pages/Portfolio";
 import Footer from "./components/Layout/Footer";
 import StarCursor from "./components/StarCursor";
 import Pricing from "./Pages/Pricing";
+import WhatsappButton from "./components/WhatsappButton";
 
 const App = () => {
 
@@ -38,6 +39,7 @@ const App = () => {
       <Route path="/portfolio" element={<Portfolio />} />
       <Route path="/pricing" element={<Pricing />} />
      </Routes>
+     <WhatsappButton/>
        <Footer/>
     </div>
   );
