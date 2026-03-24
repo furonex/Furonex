@@ -116,32 +116,39 @@ const Hero = () => {
   />
 
   {/* Orbit Container */}
-  <motion.div
-    className="absolute w-[130%] h-[130%] border border-white/10 rounded-full"
-    animate={{ rotate: 360 }}
-    transition={{
-      repeat: Infinity,
-      duration: 12,
-      ease: "linear",
-    }}
-  >
+ {/* Orbit Container */}
+<motion.div
+  className="
+    absolute 
+    w-[115%] h-[115%]      /* desktop reduced */
+    md:w-[120%] md:h-[120%]
+    sm:w-[110%] sm:h-[110%]
+    border border-white/10 rounded-full
+  "
+  animate={{ rotate: 360 }}
+  transition={{
+    repeat: Infinity,
+    duration: 12,
+    ease: "linear",
+  }}
+>
 
-    {/* Satellite */}
-    <div className="absolute -top-4 left-1/2 -translate-x-1/2">
-      <motion.img
-        src={satellite}
-        alt="satellite"
-        className="w-10 md:w-12"
-        animate={{ rotate: -360 }} // keeps it upright
-        transition={{
-          repeat: Infinity,
-          duration: 12,
-          ease: "linear",
-        }}
-      />
-    </div>
+  {/* Satellite */}
+  <div className="absolute -top-3 md:-top-4 left-1/2 -translate-x-1/2">
+    <motion.img
+      src={satellite}
+      alt="satellite"
+      className="w-8 md:w-10"   /* smaller for mobile */
+      animate={{ rotate: -360 }}
+      transition={{
+        repeat: Infinity,
+        duration: 12,
+        ease: "linear",
+      }}
+    />
+  </div>
 
-  </motion.div>
+</motion.div>
 
 </motion.div>
 
