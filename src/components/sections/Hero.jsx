@@ -1,5 +1,5 @@
 import { motion } from 'motion/react'
-import React from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import astronaut from "../../assets/astronaut.png"
 import cloud from "../../assets/cloud.png"
 import moon from "../../assets/moon.png"
@@ -41,29 +41,66 @@ const Cloud = ({ text, top, duration }) => {
   );
 };
 
+
+
 const Hero = () => {
 
-  const stars = Array.from({ length: 20 });
+ 
+  const texts = [
+    "Connecting Ideas with Technology",
+    "Building Digital Experiences",
+    "Growing Businesses Online 🚀"
+  ];
+
+  const [textIndex, setTextIndex] = useState(0);
+  const [displayText, setDisplayText] = useState("");
+  const [charIndex, setCharIndex] = useState(0);
+
+  useEffect(() => {
+    if (charIndex < texts[textIndex].length) {
+      const timeout = setTimeout(() => {
+        setDisplayText(prev => prev + texts[textIndex][charIndex]);
+        setCharIndex(charIndex + 1);
+      }, 50);
+
+      return () => clearTimeout(timeout);
+    } else {
+      setTimeout(() => {
+        setDisplayText("");
+        setCharIndex(0);
+        setTextIndex((prev) => (prev + 1) % texts.length);
+      }, 2000);
+    }
+  }, [charIndex, textIndex]);
+
+   const stars = useMemo(() => {
+  return Array.from({ length: 20 }).map(() => ({
+    top: `${Math.random() * 100}%`,
+    left: `${Math.random() * 100}%`,
+    duration: 2 + Math.random() * 3,
+  }));
+}, []);
+
 
   return (
     <section className="relative h-screen bg-[#0A0F1C] overflow-hidden flex items-center justify-center">
 
       {/* Stars */}
-      {stars.map((_, i) => (
-        <motion.div
-          key={i}
-          className="absolute w-[2px] h-[2px] bg-white rounded-full"
-          style={{
-            top: `${Math.random() * 100}%`,
-            left: `${Math.random() * 100}%`,
-          }}
-          animate={{ opacity: [0.3, 1, 0.3] }}
-          transition={{
-            duration: 2 + Math.random() * 3,
-            repeat: Infinity,
-          }}
-        />
-      ))}
+     {stars.map((star, i) => (
+  <motion.div
+    key={i}
+    className="absolute w-[2px] h-[2px] bg-white rounded-full"
+    style={{
+      top: star.top,
+      left: star.left,
+    }}
+    animate={{ opacity: [0.3, 1, 0.3] }}
+    transition={{
+      duration: star.duration,
+      repeat: Infinity,
+    }}
+  />
+))}
 
       {/* Clouds */}
       <Cloud text="Website Development" top="90px" duration={30} />
@@ -95,62 +132,63 @@ const Hero = () => {
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1 }}
-          className="text-white text-4xl md:text-5xl font-bold text-center mb-10"
+          className="text-white text-3xl md:text-5xl font-bold text-center mb-[100px]"
         >
-          Connecting Ideas with Technology
+          {displayText}
+          <span className="animate-pulse">|</span>
         </motion.h1>
 
         {/* Moon */}
-       <motion.div
-  animate={{ scale: [1, 1.05, 1] }}
-  transition={{ repeat: Infinity, duration: 6 }}
-  className="relative w-72 h-72 flex items-center justify-center"
->
+        <motion.div
+          animate={{ scale: [1, 1.05, 1] }}
+          transition={{ repeat: Infinity, duration: 6 }}
+          className="relative w-72 h-72 flex items-center justify-center"
+        >
 
-  {/* Moon */}
-  <img
-    src={moon}
-    alt="moon"
-    className="w-full h-full object-contain 
+          {/* Moon */}
+          <img
+            src={moon}
+            alt="moon"
+            className="w-full h-full object-contain 
     drop-shadow-[0_0_80px_rgba(47,128,237,0.6)]"
-  />
+          />
 
-  {/* Orbit Container */}
- {/* Orbit Container */}
-<motion.div
-  className="
+          {/* Orbit Container */}
+          {/* Orbit Container */}
+          <motion.div
+            className="
     absolute 
     w-[115%] h-[115%]      /* desktop reduced */
     md:w-[120%] md:h-[120%]
     sm:w-[110%] sm:h-[110%]
     border border-white/10 rounded-full
   "
-  animate={{ rotate: 360 }}
-  transition={{
-    repeat: Infinity,
-    duration: 12,
-    ease: "linear",
-  }}
->
+            animate={{ rotate: 360 }}
+            transition={{
+              repeat: Infinity,
+              duration: 12,
+              ease: "linear",
+            }}
+          >
 
-  {/* Satellite */}
-  <div className="absolute -top-3 md:-top-4 left-1/2 -translate-x-1/2">
-    <motion.img
-      src={satellite}
-      alt="satellite"
-      className="w-8 md:w-10"   /* smaller for mobile */
-      animate={{ rotate: -360 }}
-      transition={{
-        repeat: Infinity,
-        duration: 12,
-        ease: "linear",
-      }}
-    />
-  </div>
+            {/* Satellite */}
+            <div className="absolute -top-3 md:-top-4 left-1/2 -translate-x-1/2">
+              <motion.img
+                src={satellite}
+                alt="satellite"
+                className="w-8 md:w-10"   /* smaller for mobile */
+                animate={{ rotate: -360 }}
+                transition={{
+                  repeat: Infinity,
+                  duration: 12,
+                  ease: "linear",
+                }}
+              />
+            </div>
 
-</motion.div>
+          </motion.div>
 
-</motion.div>
+        </motion.div>
 
       </div>
 

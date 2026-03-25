@@ -68,7 +68,12 @@ const NavBar = () => {
 
           <li>
             <NavLink to="/about" className={({ isActive }) => isActive ? "text-[#2F80ED]" : ""}>
-              About
+              About Us
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/pricing" className={({ isActive }) => isActive ? "text-[#2F80ED]" : ""}>
+              Pricing
             </NavLink>
           </li>
 
@@ -85,7 +90,7 @@ const NavBar = () => {
           whileTap={{ scale: 0.95 }}
           className="hidden md:block bg-[rgb(47,128,237)] hover:bg-blue-600 px-5 py-2 rounded-lg font-semibold transition"
         >
-         <Link to="/pricing">Get Quote</Link>
+         <Link to="/contact">Get Quote</Link>
         </motion.button>
 
         {/* Mobile Menu Button */}
@@ -111,9 +116,10 @@ const NavBar = () => {
             <li><Link to="/portfolio">Portfolio</Link></li>
             <li><Link to="/about">About</Link></li>
             <li><Link to="/contact">Contact</Link></li>
+            <li><Link to="/pricing">Pricing</Link></li>
 
             <button className="bg-[#2F80ED] px-5 py-2 rounded-lg">
-              <Link to="/pricing">Get Quote</Link>
+              <Link to="/contact">Get Quote</Link>
               
             </button>
           </ul>
