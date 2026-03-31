@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { motion } from "motion/react";
 import { Link, NavLink } from "react-router-dom";
 
-const NavBar = () => {
+const NavBar = ({ setShowPopup }) => {
   const [menuOpen, setMenuOpen] = useState(false);
 
   const stars = Array.from({ length: 10 });
@@ -86,20 +86,22 @@ const NavBar = () => {
 
         {/* CTA Button */}
         <motion.button
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          className="hidden md:block bg-[rgb(47,128,237)] hover:bg-blue-600 px-5 py-2 rounded-lg font-semibold transition"
-        >
-         <Link to="/contact">Get Quote</Link>
-        </motion.button>
+  whileHover={{ scale: 1.05 }}
+  whileTap={{ scale: 0.95 }}
+  onClick={() => setShowPopup(true)}
+  className="hidden md:block bg-[rgb(47,128,237)] hover:bg-blue-600 px-5 py-2 rounded-lg font-semibold transition"
+>
+  Get Quote
+</motion.button>
+       
 
         {/* Mobile Menu Button */}
         <div
-          className="md:hidden cursor-pointer text-xl"
-          onClick={() => setMenuOpen(!menuOpen)}
-        >
-          ☰
-        </div>
+  className="md:hidden cursor-pointer text-2xl select-none"
+  onClick={() => setMenuOpen(!menuOpen)}
+>
+  {menuOpen ? "✕" : "☰"}
+</div>
       </div>
 
       {/* Mobile Menu */}
@@ -118,10 +120,12 @@ const NavBar = () => {
             <li><Link to="/contact">Contact</Link></li>
             <li><Link to="/pricing">Pricing</Link></li>
 
-            <button className="bg-[#2F80ED] px-5 py-2 rounded-lg">
-              <Link to="/contact">Get Quote</Link>
-              
-            </button>
+            
+             <button className="bg-[#2F80ED] px-5 py-2 rounded-lg"
+              onClick={() => setShowPopup(true)}>
+  Get Quote
+</button>
+           
           </ul>
 
 

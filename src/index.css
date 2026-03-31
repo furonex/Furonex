@@ -6,3 +6,21 @@
 .text-outline{
     -webkit-text-stroke: 1px rgba(255, 255, 255, 0.1);
 }
+
+.clip-hex {
+  clip-path: polygon(
+    25% 5%, 
+    75% 5%, 
+    100% 50%, 
+    75% 95%, 
+    25% 95%, 
+    0% 50%
+  );
+}
+.input {
+  width: 100%;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  outline: none;
+}

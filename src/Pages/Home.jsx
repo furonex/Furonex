@@ -7,6 +7,7 @@ import Process from "../components/sections/Process";
 import WhyChooseUs from "../components/sections/WhyChooseUs";
 import ContactSection from '../components/sections/ContactSection';
 import FAQ from '../components/sections/FAQ';
+import Industries from '../components/sections/Industries';
 
 
 
@@ -26,6 +27,7 @@ const Home = () => {
       <Services/>
       <WhyChooseUs/>
       <Process/>
+      <Industries/>
       <ContactSection/>
       <FAQ/>
     
