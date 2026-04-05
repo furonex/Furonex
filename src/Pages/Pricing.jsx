@@ -1,7 +1,7 @@
 import { motion } from "motion/react";
 import { Check } from "lucide-react";
 
-const Pricing = () => {
+const Pricing = ({setShowPopup}) => {
 
   const plans = [
     {
@@ -114,7 +114,9 @@ const Pricing = () => {
             </ul>
 
             {/* Button */}
-            <button className="w-full bg-[#2F80ED] hover:bg-blue-600 py-2 rounded-lg font-semibold">
+            <button className="w-full bg-[#2F80ED] hover:bg-blue-600 py-2 rounded-lg font-semibold"
+            onClick={() => setShowPopup(true)}
+            >
               Get Started
             </button>
 

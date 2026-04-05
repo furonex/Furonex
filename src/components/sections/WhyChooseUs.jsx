@@ -32,6 +32,18 @@ const WhyChooseUs = () => {
     "Automation",
   ];
 
+  // 🎨 Controlled Color Palette (Brand Safe)
+  const hexColors = [
+    { glow: "rgba(47,128,237,0.6)", text: "#2F80ED" }, // Blue
+    { glow: "rgba(0,255,200,0.6)", text: "#00FFC8" },  // Cyan
+    { glow: "rgba(168,85,247,0.6)", text: "#A855F7" }, // Purple
+    { glow: "rgba(34,197,94,0.6)", text: "#22C55E" },  // Green
+    { glow: "rgba(251,191,36,0.6)", text: "#FBBF24" }, // Yellow
+    { glow: "rgba(239,68,68,0.6)", text: "#EF4444" },  // Red
+    { glow: "rgba(59,130,246,0.6)", text: "#3B82F6" }, // Light Blue
+    { glow: "rgba(236,72,153,0.6)", text: "#EC4899" }, // Pink
+  ];
+
   return (
     <section className="relative bg-[#0A0F1C] py-28 px-6 text-white overflow-hidden">
 
@@ -67,7 +79,6 @@ const WhyChooseUs = () => {
             Facing these challenges?
           </h3>
 
-          {/* ✅ Bullet Points */}
           <ul className="space-y-3 mb-8">
             {painPoints.map((item, index) => (
               <li key={index} className="flex items-start gap-3 text-gray-400 text-sm">
@@ -81,7 +92,6 @@ const WhyChooseUs = () => {
             We turn confusion into clarity and ideas into scalable digital solutions.
           </p>
 
-          {/* CTA */}
           <button className="bg-[#2F80ED] hover:bg-blue-600 px-6 py-3 rounded-lg font-semibold transition">
             Start Your Project →
           </button>
@@ -94,32 +104,44 @@ const WhyChooseUs = () => {
           transition={{ duration: 0.8 }}
           className="flex justify-center items-center"
         >
+          <div className="grid grid-cols-3 gap-5">
 
-          <div className="grid grid-cols-3 gap-4">
+            {hexItems.map((item, index) => {
+              const color = hexColors[index % hexColors.length];
 
-            {hexItems.map((item, index) => (
-              <motion.div
-                key={index}
-                whileHover={{ scale: 1.1 }}
-                className="
-                  w-24 h-24 md:w-28 md:h-28
-                  bg-[#111827]
-                  border border-[#2F80ED]/30
-                  flex items-center justify-center
-                  text-center text-xs md:text-sm
-                  font-semibold
-                  text-white
-                  clip-hex
-                  shadow-[0_0_25px_rgba(47,128,237,0.3)]
-                  transition
-                "
-              >
-                {item}
-              </motion.div>
-            ))}
+              return (
+                <motion.div
+                  key={index}
+                  whileHover={{
+                    scale: 1.12,
+                    boxShadow: `0 0 40px ${color.glow}`,
+                  }}
+                  className={`
+                    relative
+                    w-24 h-24 md:w-28 md:h-28
+                    flex items-center justify-center
+                    text-center text-xs md:text-sm
+                    font-semibold
+                    clip-hex
+                    transition-all duration-300
+                    ${index % 3 === 1 ? "mt-6" : ""}  // honeycomb offset
+                  `}
+                  style={{
+                    backgroundColor: "#111827",
+                    border: `1px solid ${color.text}40`,
+                    color: color.text,
+                    boxShadow: `0 0 25px ${color.glow}`,
+                  }}
+                >
+                  {/* ✨ Glass overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent pointer-events-none" />
+
+                  {item}
+                </motion.div>
+              );
+            })}
 
           </div>
-
         </motion.div>
 
       </div>

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 
 import NavBar from "./components/Layout/NavBar";
+
 import Services from "./components/sections/Services";
 import Loader from "./Loader";
 import Contact from "./Pages/Contact";
@@ -13,6 +14,7 @@ import StarCursor from "./components/StarCursor";
 import Pricing from "./Pages/Pricing";
 import WhatsappButton from "./components/WhatsappButton";
 import QuotePopup from "./components/QuotePopup";
+import ScrollToTop from "./components/ScrollToTop ";
 
 const App = () => {
 
@@ -46,13 +48,14 @@ const App = () => {
       <NavBar setShowPopup={setShowPopup} />
       <StarCursor />
 
+      <ScrollToTop/>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/services" element={<Services />} />
         <Route path="/portfolio" element={<Portfolio />} />
-        <Route path="/pricing" element={<Pricing />} />
+        <Route path="/pricing" element={<Pricing setShowPopup={setShowPopup}/>} />
       </Routes>
 
       <WhatsappButton />

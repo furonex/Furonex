@@ -89,14 +89,18 @@ Message: ${form.message}`;
                 "Digital Marketing",
                 "E-commerce SEO",
               ].map((service) => (
-                <label key={service} className="flex gap-2">
-                  <input
-                    type="checkbox"
-                    onChange={() => handleCheckbox(service)}
-                  />
-                  {service}
-                </label>
-              ))}
+                <label
+                    key={service}
+                    className="flex items-start gap-2 leading-tight cursor-pointer"
+                  >
+                    <input
+                      type="checkbox"
+                      className="mt-[2px] accent-[#2F80ED] min-w-[16px]"
+                      onChange={() => handleCheckbox(service)}
+                    />
+                    <span className="text-gray-700">{service}</span>
+                  </label>
+                                ))}
             </div>
           </div>
 
