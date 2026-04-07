@@ -3,7 +3,6 @@ import { useMemo } from "react";
 
 const WhyChooseUs = () => {
 
-  // ⭐ STATIC STARS (no jumping issue)
   const stars = useMemo(() => {
     return Array.from({ length: 15 }).map(() => ({
       top: `${Math.random() * 100}%`,
@@ -32,16 +31,15 @@ const WhyChooseUs = () => {
     "Automation",
   ];
 
-  // 🎨 Controlled Color Palette (Brand Safe)
   const hexColors = [
-    { glow: "rgba(47,128,237,0.6)", text: "#2F80ED" }, // Blue
-    { glow: "rgba(0,255,200,0.6)", text: "#00FFC8" },  // Cyan
-    { glow: "rgba(168,85,247,0.6)", text: "#A855F7" }, // Purple
-    { glow: "rgba(34,197,94,0.6)", text: "#22C55E" },  // Green
-    { glow: "rgba(251,191,36,0.6)", text: "#FBBF24" }, // Yellow
-    { glow: "rgba(239,68,68,0.6)", text: "#EF4444" },  // Red
-    { glow: "rgba(59,130,246,0.6)", text: "#3B82F6" }, // Light Blue
-    { glow: "rgba(236,72,153,0.6)", text: "#EC4899" }, // Pink
+    "#2F80ED",
+    "#00FFC8",
+    "#A855F7",
+    "#22C55E",
+    "#FBBF24",
+    "#EF4444",
+    "#3B82F6",
+    "#EC4899",
   ];
 
   return (
@@ -58,9 +56,9 @@ const WhyChooseUs = () => {
         />
       ))}
 
-      <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-16 items-center relative z-10">
+      <div className="max-w-7xl pl-5 mx-auto grid md:grid-cols-2 gap-16 items-center relative z-10">
 
-        {/* 🔥 LEFT SIDE */}
+        {/* LEFT */}
         <motion.div
           initial={{ opacity: 0, x: -60 }}
           whileInView={{ opacity: 1, x: 0 }}
@@ -72,6 +70,7 @@ const WhyChooseUs = () => {
 
           <p className="text-gray-400 mb-6">
             We don’t follow trends — we build strategies that actually work.
+            <br />
             Our solutions are designed based on real business growth, not guesswork.
           </p>
 
@@ -88,56 +87,48 @@ const WhyChooseUs = () => {
             ))}
           </ul>
 
-          <p className="text-gray-500 text-sm mb-6">
-            We turn confusion into clarity and ideas into scalable digital solutions.
-          </p>
-
           <button className="bg-[#2F80ED] hover:bg-blue-600 px-6 py-3 rounded-lg font-semibold transition">
             Start Your Project →
           </button>
         </motion.div>
 
-        {/* 🚀 RIGHT SIDE (HEX GRID) */}
+        {/* RIGHT HEX GRID */}
         <motion.div
           initial={{ opacity: 0, x: 60 }}
           whileInView={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8 }}
           className="flex justify-center items-center"
         >
-          <div className="grid grid-cols-3 gap-5">
+          <div className="grid grid-cols-3 gap-6">
 
             {hexItems.map((item, index) => {
               const color = hexColors[index % hexColors.length];
 
               return (
-                <motion.div
-                  key={index}
-                  whileHover={{
-                    scale: 1.12,
-                    boxShadow: `0 0 40px ${color.glow}`,
-                  }}
-                  className={`
-                    relative
-                    w-24 h-24 md:w-28 md:h-28
-                    flex items-center justify-center
-                    text-center text-xs md:text-sm
-                    font-semibold
-                    clip-hex
-                    transition-all duration-300
-                    ${index % 3 === 1 ? "mt-6" : ""}  // honeycomb offset
-                  `}
-                  style={{
-                    backgroundColor: "#111827",
-                    border: `1px solid ${color.text}40`,
-                    color: color.text,
-                    boxShadow: `0 0 25px ${color.glow}`,
-                  }}
-                >
-                  {/* ✨ Glass overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent pointer-events-none" />
-
-                  {item}
-                </motion.div>
+               <motion.div
+  key={index}
+  initial="rest"
+  whileHover="hover"
+  animate="rest"
+  style={{ "--hex-color": color }}
+  className={`hex-wrapper ${index % 3 === 1 ? "mt-6" : ""}`}
+  variants={{
+    rest: { filter: "none" },
+    hover: {
+      filter: `drop-shadow(0 0 12px ${color}) drop-shadow(0 0 24px ${color})`,
+    },
+  }}
+>
+  <motion.div
+    className="hex-inner"
+    variants={{
+      rest: { scale: 1 },
+      hover: { scale: 1.1, y: -5 },
+    }}
+  >
+    <span>{item}</span>
+  </motion.div>
+</motion.div>
               );
             })}
 
