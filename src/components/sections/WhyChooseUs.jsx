@@ -43,7 +43,7 @@ const WhyChooseUs = () => {
   ];
 
   return (
-    <section className="relative bg-[#0A0F1C] py-28 px-6 text-white overflow-hidden">
+    <section className="relative bg-[#0A0F1C] py-20 md:py-28 px-4 md:px-6 text-white overflow-hidden">
 
       {/* ⭐ Stars */}
       {stars.map((star, i) => (
@@ -56,25 +56,25 @@ const WhyChooseUs = () => {
         />
       ))}
 
-      <div className="max-w-7xl pl-5 mx-auto grid md:grid-cols-2 gap-16 items-center relative z-10">
+      <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-12 md:gap-16 items-center relative z-10">
 
         {/* LEFT */}
         <motion.div
-          initial={{ opacity: 0, x: -60 }}
+          initial={{ opacity: 0, x: -40 }}
           whileInView={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.8 }}
+          transition={{ duration: 0.7 }}
         >
-          <h2 className="text-4xl md:text-5xl font-bold mb-6 leading-tight">
+          <h2 className="text-3xl md:text-5xl font-bold mb-6 leading-tight">
             Why Businesses <span className="text-[#2F80ED]">Trust Furonex?</span>
           </h2>
 
-          <p className="text-gray-400 mb-6">
+          <p className="text-gray-400 mb-6 text-sm md:text-base">
             We don’t follow trends — we build strategies that actually work.
             <br />
             Our solutions are designed based on real business growth, not guesswork.
           </p>
 
-          <h3 className="text-lg mb-4 text-gray-300">
+          <h3 className="text-base md:text-lg mb-4 text-gray-300">
             Facing these challenges?
           </h3>
 
@@ -94,41 +94,41 @@ const WhyChooseUs = () => {
 
         {/* RIGHT HEX GRID */}
         <motion.div
-          initial={{ opacity: 0, x: 60 }}
+          initial={{ opacity: 0, x: 40 }}
           whileInView={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.8 }}
-          className="flex justify-center items-center"
+          transition={{ duration: 0.7 }}
+          className="flex justify-center"
         >
-          <div className="grid grid-cols-3 gap-6">
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
 
             {hexItems.map((item, index) => {
               const color = hexColors[index % hexColors.length];
 
               return (
-               <motion.div
-  key={index}
-  initial="rest"
-  whileHover="hover"
-  animate="rest"
-  style={{ "--hex-color": color }}
-  className={`hex-wrapper ${index % 3 === 1 ? "mt-6" : ""}`}
-  variants={{
-    rest: { filter: "none" },
-    hover: {
-      filter: `drop-shadow(0 0 12px ${color}) drop-shadow(0 0 24px ${color})`,
-    },
-  }}
->
-  <motion.div
-    className="hex-inner"
-    variants={{
-      rest: { scale: 1 },
-      hover: { scale: 1.1, y: -5 },
-    }}
-  >
-    <span>{item}</span>
-  </motion.div>
-</motion.div>
+                <motion.div
+                  key={index}
+                  initial="rest"
+                  whileHover="hover"
+                  animate="rest"
+                  style={{ "--hex-color": color }}
+                  className={`hex-wrapper md:${index % 3 === 1 ? "mt-6" : ""}`}
+                  variants={{
+                    rest: { filter: "none" },
+                    hover: {
+                      filter: `drop-shadow(0 0 12px ${color}) drop-shadow(0 0 24px ${color})`,
+                    },
+                  }}
+                >
+                  <motion.div
+                    className="hex-inner"
+                    variants={{
+                      rest: { scale: 1 },
+                      hover: { scale: 1.08, y: -4 },
+                    }}
+                  >
+                    <span>{item}</span>
+                  </motion.div>
+                </motion.div>
               );
             })}
 
