@@ -83,12 +83,20 @@ const NavBar = ({ setShowPopup }) => {
             </NavLink>
           </li>
 
-          <li>
-            <NavLink to="/game" className={({ isActive }) => isActive ? "text-[#2F80ED]" : ""}>
+         
+        </ul>
+
+        <div className="flex gap-2">
+                <motion.button
+  whileHover={{ scale: 1.05 }}
+  whileTap={{ scale: 0.95 }}
+  
+  className="hidden md:block bg-[rgb(237,47,88)] hover:bg-red-600 px-5 py-2 rounded-lg font-semibold transition"
+>
+  <NavLink to="/game" className={({ isActive }) => isActive ? "text-[#061a1f]" : ""}>
               Game
             </NavLink>
-          </li>
-        </ul>
+</motion.button>
 
         {/* CTA Button */}
         <motion.button
@@ -99,6 +107,7 @@ const NavBar = ({ setShowPopup }) => {
 >
   Get Quote
 </motion.button>
+</div>
        
 
         {/* Mobile Menu Button */}
@@ -125,8 +134,12 @@ const NavBar = ({ setShowPopup }) => {
             <li><Link to="/about">About</Link></li>
             <li><Link to="/contact">Contact</Link></li>
             <li><Link to="/pricing">Pricing</Link></li>
-            <li><Link to="/game">Game</Link></li>
+           
             
+                    <button className="bg-[#ed2f2f] px-5 py-2 rounded-lg"
+              >
+  <Link to="/game">Game</Link>
+</button>
              <button className="bg-[#2F80ED] px-5 py-2 rounded-lg"
               onClick={() => setShowPopup(true)}>
   Get Quote
