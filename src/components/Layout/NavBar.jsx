@@ -82,6 +82,12 @@ const NavBar = ({ setShowPopup }) => {
               Contact
             </NavLink>
           </li>
+
+          <li>
+            <NavLink to="/game" className={({ isActive }) => isActive ? "text-[#2F80ED]" : ""}>
+              Game
+            </NavLink>
+          </li>
         </ul>
 
         {/* CTA Button */}
@@ -119,7 +125,7 @@ const NavBar = ({ setShowPopup }) => {
             <li><Link to="/about">About</Link></li>
             <li><Link to="/contact">Contact</Link></li>
             <li><Link to="/pricing">Pricing</Link></li>
-
+            <li><Link to="/game">Pricing</Link></li>
             
              <button className="bg-[#2F80ED] px-5 py-2 rounded-lg"
               onClick={() => setShowPopup(true)}>

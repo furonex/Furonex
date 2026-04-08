@@ -15,6 +15,7 @@ import Pricing from "./Pages/Pricing";
 import WhatsappButton from "./components/WhatsappButton";
 import QuotePopup from "./components/QuotePopup";
 import ScrollToTop from "./components/ScrollToTop ";
+import Game from "./Pages/Game";
 
 const App = () => {
 
@@ -56,6 +57,7 @@ const App = () => {
         <Route path="/services" element={<Services />} />
         <Route path="/portfolio" element={<Portfolio />} />
         <Route path="/pricing" element={<Pricing setShowPopup={setShowPopup}/>} />
+        <Route path="/game" element={<Game />} />
       </Routes>
 
       <WhatsappButton />
