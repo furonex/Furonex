@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { motion } from "motion/react";
 import { Link, NavLink } from "react-router-dom";
-import logo from "../../assets/WL-3.png";
+import logo from "../../assets/WL-F.png";
 
 const NavBar = ({ setShowPopup }) => {
   const [menuOpen, setMenuOpen] = useState(false);
