@@ -43,7 +43,7 @@ const NavBar = ({ setShowPopup }) => {
     src={logo}
     alt="Furonex Logo"
     whileHover={{ scale: 1.05 }}
-    className="h-8 sm:h-10 md:h-12 w-auto object-contain"
+    className="h-3 sm:h-4 md:h-5 w-auto object-contain"
   />
 </Link>
 
