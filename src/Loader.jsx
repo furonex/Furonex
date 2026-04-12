@@ -1,5 +1,5 @@
 import { motion } from "motion/react";
-import logo from "./assets/logo.svg";
+import logo from "./assets/logo.png";
 
 const Loader = () => {
 

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { motion } from "motion/react";
 import { Link, NavLink } from "react-router-dom";
+import logo from "../../assets/Website Logo (1).png";
 
 const NavBar = ({ setShowPopup }) => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -38,13 +39,13 @@ const NavBar = ({ setShowPopup }) => {
 
         {/* Logo */}
         <Link to="/">
-          <motion.div
-            whileHover={{ scale: 1.05 }}
-            className="text-2xl font-bold text-[#2F80ED]"
-          >
-            Furonex
-          </motion.div>
-        </Link>
+  <motion.img
+    src={logo}
+    alt="Furonex Logo"
+    whileHover={{ scale: 1.05 }}
+    className="h-8 sm:h-10 md:h-12 w-auto object-contain"
+  />
+</Link>
 
         {/* Desktop Menu */}
         <ul className="hidden md:flex space-x-8 font-medium">
