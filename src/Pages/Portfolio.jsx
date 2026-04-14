@@ -5,16 +5,10 @@ const Portfolio = () => {
 
   const projects = [
     {
-      name: "MS99 Realty",
-      url: "https://www.ms99realty.com/",
-      border: "border-blue-500",
-      glow: "hover:shadow-[0_0_35px_rgba(47,128,237,0.4)]",
-    },
-    {
-      name: "Instant Doc Solution",
-      url: "https://instantdocsolution.in/",
-      border: "border-purple-500",
-      glow: "hover:shadow-[0_0_35px_rgba(140,120,255,0.4)]",
+      name: "Shavide",
+      url: "https://www.shavide.com/",
+      border: "border-cyan-500",
+      glow: "hover:shadow-[0_0_35px_rgba(6,182,212,0.35)]",
     },
     {
       name: "Braventa Infra",
@@ -22,6 +16,15 @@ const Portfolio = () => {
       border: "border-pink-500",
       glow: "hover:shadow-[0_0_35px_rgba(255,120,180,0.35)]",
     },
+    
+    {
+      name: "Instant Doc Solution",
+      url: "https://instantdocsolution.in/",
+      border: "border-purple-500",
+      glow: "hover:shadow-[0_0_35px_rgba(140,120,255,0.4)]",
+    },
+    
+    
     {
       name: "Ankit Electrical",
       url: "https://ankitelectrical.com/",
@@ -35,11 +38,12 @@ const Portfolio = () => {
       glow: "hover:shadow-[0_0_35px_rgba(234,179,8,0.35)]",
     },
     {
-      name: "Shavide",
-      url: "https://www.shavide.com/",
-      border: "border-cyan-500",
-      glow: "hover:shadow-[0_0_35px_rgba(6,182,212,0.35)]",
+      name: "MS99 Realty",
+      url: "https://www.ms99realty.com/",
+      border: "border-blue-500",
+      glow: "hover:shadow-[0_0_35px_rgba(47,128,237,0.4)]",
     },
+    
   ];
 
   return (
