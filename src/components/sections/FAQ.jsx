@@ -13,46 +13,46 @@ const FAQ = () => {
     },
     {
       q: "What digital marketing services do we offer in India?",
-      a: "Furonex offers a wide range of services, including SEO, PPC, social media marketing, content creation, email marketing, conversion rate optimization (CRO), and web development. Our goal is to provide customized strategies that help businesses improve their online visibility and drive measurable results.",
+      a: "Furonex offers a wide range of services, including SEO, PPC, social media marketing, content creation, email marketing, conversion rate optimization (CRO), and web development.",
     },
     {
       q: "Do Furonex offer web development services alongside digital marketing?",
-      a: "Yes, we at Furonex provide full web development services. From designing responsive websites to developing e-commerce platforms, we ensure that your site is not only visually appealing but also optimized for performance, user experience, and SEO.",
+      a: "Yes, we provide full web development services including responsive websites and e-commerce platforms optimized for performance and SEO.",
     },
     {
       q: "How do we customize our services for businesses?",
-      a: "We understand that every business is unique. Our process begins with an in-depth analysis of your goals, target audience, and competition. Based on that, we create a personalized digital strategy that aligns with your objectives and ensures maximum impact.",
+      a: "We analyze your goals, audience, and competitors to create a personalized digital strategy for maximum impact.",
     },
     {
       q: "Can we help improve your social media presence?",
-      a: "Yes, we offer comprehensive social media marketing services. We create customized content strategies, manage campaigns, and provide engagement analysis to grow your brand presence and drive meaningful interactions.",
+      a: "Yes, we create content strategies, manage campaigns, and analyze engagement to grow your brand.",
     },
     {
       q: "What industries do we have experience working with?",
-      a: "Furonex has experience working across multiple industries including e-commerce, healthcare, education, finance, retail, and more. We adapt our strategies based on industry-specific needs to deliver effective results.",
+      a: "We’ve worked across e-commerce, healthcare, education, finance, retail, and more.",
     },
     {
       q: "What certifications do our marketing experts hold?",
-      a: "Our team members hold certifications from leading platforms like Google Ads, Meta (Facebook) Blueprint, HubSpot, and more. This ensures we stay updated with the latest trends and deliver effective solutions.",
+      a: "Our team is certified in Google Ads, Meta Blueprint, HubSpot, and more.",
     },
     {
       q: "Do we work with startups or only larger companies?",
-      a: "We work with businesses of all sizes, from startups to large enterprises. Our flexible and scalable solutions are designed to fit your business stage and growth needs.",
+      a: "We work with startups to enterprises with scalable solutions.",
     },
     {
       q: "How do Furonex measure the success of campaigns?",
-      a: "Furonex measures success using KPIs such as website traffic, conversion rates, ROI, and engagement metrics. We provide transparent reports so you can clearly see your growth and performance.",
+      a: "We track KPIs like traffic, conversions, ROI, and engagement.",
     },
     {
-      q: "What makes our company different from other digital marketing agencies?",
-      a: "What sets Furonex apart is our personalized approach and commitment to delivering measurable results. We don’t use cookie-cutter solutions — instead, we tailor strategies for each client and continuously optimize for growth.",
+      q: "What makes our company different?",
+      a: "We provide personalized strategies and focus on measurable results.",
     },
   ];
 
   return (
     <section className="relative bg-[#0A0F1C] py-28 px-6 text-white overflow-hidden">
 
-      {/* ⭐ Stars Background */}
+      {/* Stars */}
       {stars.map((_, i) => (
         <motion.div
           key={i}
@@ -79,65 +79,67 @@ const FAQ = () => {
         </p>
       </div>
 
-      {/* FAQ Grid */}
-      <div className="max-w-6xl mx-auto relative z-10 grid grid-cols-1 md:grid-cols-2 gap-6">
+      {/* FAQ */}
+      <div className="max-w-5xl mx-auto relative z-10">
 
         {faqs.map((item, i) => {
           const isOpen = active === i;
+          const isLeft = i % 2 === 0;
 
           return (
             <motion.div
               key={i}
               layout
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.4, delay: i * 0.08 }}
-              
-              className={`
-                px-5 py-4 rounded-xl cursor-pointer transition-all duration-300
-                ${isOpen 
-                  ? "bg-[#111827] border border-[#2F80ED]/40 shadow-[0_0_25px_rgba(47,128,237,0.25)]" 
-                  : "bg-transparent border-b border-gray-800 hover:bg-[#111827]/40"
-                }
-
-                ${i % 2 === 0 
-                  ? "md:col-start-1" 
-                  : "md:col-start-2 md:mt-10"
-                }
-              `}
-              
-              onClick={() => setActive(isOpen ? null : i)}
+              initial={{ opacity: 0, x: isLeft ? -50 : 50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              animate={{
+                marginBottom: isOpen ? 28 : 20, // 🔥 animated spacing
+                scale: isOpen ? 1.02 : 1,       // 🔥 subtle premium effect
+              }}
+              transition={{ duration: 0.35 }}
+              className={`flex ${isLeft ? "justify-start" : "justify-end"}`}
             >
-
-              {/* Question */}
-              <div className="flex justify-between items-center">
-                <h3 className="text-sm md:text-base font-medium">
-                  {item.q}
-                </h3>
-
-                <motion.div
-                  animate={{ rotate: isOpen ? 180 : 0 }}
-                  transition={{ duration: 0.3 }}
-                >
-                  <ChevronDown size={18} />
-                </motion.div>
-              </div>
-
-              {/* Answer */}
-              <motion.div
-                initial={false}
-                animate={{
-                  height: isOpen ? "auto" : 0,
-                  opacity: isOpen ? 1 : 0,
-                }}
-                transition={{ duration: 0.3 }}
-                className="overflow-hidden"
+              <div
+                onClick={() => setActive(isOpen ? null : i)}
+                className={`
+                  w-full md:w-[48%] px-5 py-4 rounded-xl cursor-pointer transition-all duration-300
+                  ${isOpen 
+                    ? "bg-[#111827] border border-[#2F80ED]/40 shadow-[0_0_25px_rgba(47,128,237,0.25)]" 
+                    : "bg-transparent border border-gray-800 hover:bg-[#111827]/40"
+                  }
+                `}
               >
-                <p className="text-gray-400 text-sm mt-3 leading-relaxed">
-                  {item.a}
-                </p>
-              </motion.div>
 
+                {/* Question */}
+                <div className="flex justify-between items-center">
+                  <h3 className="text-sm md:text-base font-medium">
+                    {item.q}
+                  </h3>
+
+                  <motion.div
+                    animate={{ rotate: isOpen ? 180 : 0 }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    <ChevronDown size={18} />
+                  </motion.div>
+                </div>
+
+                {/* Answer */}
+                <motion.div
+                  initial={false}
+                  animate={{
+                    height: isOpen ? "auto" : 0,
+                    opacity: isOpen ? 1 : 0,
+                  }}
+                  transition={{ duration: 0.3 }}
+                  className="overflow-hidden"
+                >
+                  <p className="text-gray-400 text-sm mt-3 leading-relaxed">
+                    {item.a}
+                  </p>
+                </motion.div>
+
+              </div>
             </motion.div>
           );
         })}

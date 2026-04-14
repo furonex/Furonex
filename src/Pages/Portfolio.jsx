@@ -1,13 +1,51 @@
 import { motion } from "motion/react";
 
 const Portfolio = () => {
-
   const stars = Array.from({ length: 20 });
 
-  return (
-    <section className="relative min-h-screen bg-[#0A0F1C] flex flex-col items-center justify-center text-white px-6 overflow-hidden">
+  const projects = [
+    {
+      name: "MS99 Realty",
+      url: "https://www.ms99realty.com/",
+      border: "border-blue-500",
+      glow: "hover:shadow-[0_0_35px_rgba(47,128,237,0.4)]",
+    },
+    {
+      name: "Instant Doc Solution",
+      url: "https://instantdocsolution.in/",
+      border: "border-purple-500",
+      glow: "hover:shadow-[0_0_35px_rgba(140,120,255,0.4)]",
+    },
+    {
+      name: "Braventa Infra",
+      url: "https://www.braventainfra.com/",
+      border: "border-pink-500",
+      glow: "hover:shadow-[0_0_35px_rgba(255,120,180,0.35)]",
+    },
+    {
+      name: "Ankit Electrical",
+      url: "https://ankitelectrical.com/",
+      border: "border-green-500",
+      glow: "hover:shadow-[0_0_35px_rgba(34,197,94,0.35)]",
+    },
+    {
+      name: "Yuvi Driving School",
+      url: "https://yuvidrivingschool.in/",
+      border: "border-yellow-500",
+      glow: "hover:shadow-[0_0_35px_rgba(234,179,8,0.35)]",
+    },
+    {
+      name: "Shavide",
+      url: "https://www.shavide.com/",
+      border: "border-cyan-500",
+      glow: "hover:shadow-[0_0_35px_rgba(6,182,212,0.35)]",
+    },
+  ];
 
-      {/* Stars */}
+  return (
+    <section className="relative min-h-screen bg-[#0A0F1C] py-24 px-6 text-white overflow-hidden">
+
+      {/* ⭐ Stars */}
       {stars.map((_, i) => (
         <motion.div
           key={i}
@@ -24,33 +62,55 @@ const Portfolio = () => {
         />
       ))}
 
-      {/* Content */}
-      <motion.div
-        initial={{ opacity: 0, y: 40 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8 }}
-        className="text-center relative z-10"
-      >
-
-        {/* Title */}
-        <h1 className="text-4xl md:text-6xl font-bold mb-6">
-          Portfolio
+      {/* Heading */}
+      <div className="text-center mb-16 relative z-10">
+        <h1 className="text-4xl md:text-6xl font-bold mb-4">
+          Our Portfolio
         </h1>
-
-        {/* Coming Soon */}
-        <p className="text-gray-400 text-lg mb-6">
-          Our work is on the way 🚀
+        <p className="text-gray-400 text-lg">
+          Real projects. Real results 🚀
         </p>
+      </div>
 
-        <motion.div
-          animate={{ opacity: [0.5, 1, 0.5] }}
-          transition={{ duration: 2, repeat: Infinity }}
-          className="text-[#2F80ED] text-2xl font-semibold"
-        >
-          Coming Soon...
-        </motion.div>
+      {/* Cards */}
+      <div className="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 relative z-10">
 
-      </motion.div>
+        {projects.map((project, i) => (
+          <motion.a
+            key={i}
+            href={project.url}
+            target="_blank"
+            rel="noreferrer"
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: i * 0.1 }}
+            whileHover={{ scale: 1.05 }}
+            className={`
+              bg-[#111827] p-6 rounded-2xl border-2 ${project.border}
+              ${project.glow}
+              transition-all duration-300
+            `}
+          >
+
+            {/* Project Name */}
+            <h3 className="text-xl font-semibold mb-3">
+              {project.name}
+            </h3>
+
+            {/* Visit Text */}
+            <p className="text-gray-400 text-sm mb-4">
+              Visit Website →
+            </p>
+
+            {/* URL */}
+            <div className="text-[#2F80ED] text-sm break-all">
+              {project.url.replace("https://", "")}
+            </div>
+
+          </motion.a>
+        ))}
+
+      </div>
 
     </section>
   );
