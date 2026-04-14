@@ -170,12 +170,11 @@ const PROP_TYPES = [
 
 // ─── Difficulty Config ────────────────────────────────────────────────────────
 const DIFFS = {
-  easy:   { impostors: 3, decoys: 2, time: 45, pulseAmt: 2.2,  pulseEvery: 3.0, alpha: 0.78, missLimit: 7,  label: "Easy",   color: "#1D9E75", desc: "3 impostors · 7 misses" },
-  medium: { impostors: 5, decoys: 3, time: 32, pulseAmt: 1.2,  pulseEvery: 5.0, alpha: 0.88, missLimit: 5,  label: "Medium", color: "#EF9F27", desc: "5 impostors · 5 misses" },
-  hard:   { impostors: 7, decoys: 4, time: 24, pulseAmt: 0.55, pulseEvery: 7.5, alpha: 0.94, missLimit: 3,  label: "Hard",   color: "#E24B4A", desc: "7 impostors · 3 misses" },
+  easy:   { impostors: 3, decoys: 2, time: 45, pulseAmt: 2.2,  pulseEvery: 3.0, alpha: 0.78, missLimit: 7, label: "Easy",   color: "#1D9E75", desc: "3 impostors · 7 misses" },
+  medium: { impostors: 5, decoys: 3, time: 32, pulseAmt: 1.2,  pulseEvery: 5.0, alpha: 0.88, missLimit: 5, label: "Medium", color: "#EF9F27", desc: "5 impostors · 5 misses" },
+  hard:   { impostors: 7, decoys: 4, time: 24, pulseAmt: 0.55, pulseEvery: 7.5, alpha: 0.94, missLimit: 3, label: "Hard",   color: "#E24B4A", desc: "7 impostors · 3 misses" },
 };
 
-// ─── Helpers ──────────────────────────────────────────────────────────────────
 const randInt   = (a, b) => a + Math.floor(Math.random() * (b - a));
 const randFloat = (a, b) => a + Math.random() * (b - a);
 function shuffle(arr) {
@@ -184,7 +183,6 @@ function shuffle(arr) {
   return a;
 }
 
-// Muted blue-grey tints so impostors blend into the room background
 const IMP_TINTS = ["#8CA8BE", "#9BAAB6", "#A2B2C2", "#B0BFCC", "#7A9CB5", "#9EB0C0"];
 
 function buildScene(W, H, difficulty) {
@@ -223,36 +221,87 @@ function buildScene(W, H, difficulty) {
       x, y, w: pt.w, h: pt.h, type: pt,
       isImp, isDecoy, found: false,
       tint: isImp ? IMP_TINTS[randInt(0, IMP_TINTS.length)] : null,
-      // Pulse state
-      pulseTimer:    randFloat(0, cfg.pulseEvery),   // starts mid-cycle so not all pulse at once
+      pulseTimer:    randFloat(0, cfg.pulseEvery),
       pulseInterval: cfg.pulseEvery + randFloat(-1.2, 1.2),
-      pulsing:       false,
-      pulseProgress: 0,
-      // Decoy state
+      pulsing: false, pulseProgress: 0,
       decoyOffset: randFloat(0, Math.PI * 2),
     });
   }
   return objects;
 }
 
+// ─── Inline responsive styles via <style> tag ─────────────────────────────────
+const STYLES = `
+  .gh-root { min-height:100vh; background:#0A0F1C; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:12px; font-family:'Segoe UI',system-ui,sans-serif; color:#fff; position:relative; overflow:hidden; box-sizing:border-box; }
+  .gh-wrap { position:relative; z-index:10; width:100%; max-width:720px; box-sizing:border-box; }
+
+  /* ── Header ── */
+  .gh-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:10px; gap:8px; }
+  .gh-title  { font-size:clamp(16px,5vw,26px); font-weight:700; color:#67E3F9; margin:0; letter-spacing:-0.5px; line-height:1.2; }
+  .gh-sub    { font-size:11px; color:rgba(255,255,255,0.32); margin:2px 0 0; }
+  .gh-mute   { flex-shrink:0; background:rgba(255,255,255,0.07); border:1px solid rgba(255,255,255,0.12); border-radius:8px; padding:6px 10px; font-size:16px; cursor:pointer; color:rgba(255,255,255,0.7); line-height:1; white-space:nowrap; }
+
+  /* ── HUD: 2×2 on very small screens, 4-col on wider ── */
+  .gh-hud { display:grid; grid-template-columns:repeat(4,1fr); gap:6px; margin-bottom:8px; }
+  @media(max-width:360px){ .gh-hud { grid-template-columns:repeat(2,1fr); } }
+  .gh-stat { background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.08); border-radius:10px; padding:6px 4px; text-align:center; min-width:0; }
+  .gh-stat-lbl { font-size:9px; color:rgba(255,255,255,0.32); text-transform:uppercase; letter-spacing:.07em; margin-bottom:2px; }
+  .gh-stat-val { font-size:clamp(12px,3.5vw,20px); font-weight:700; transition:color .3s; line-height:1.2; }
+
+  /* ── Difficulty row: wraps naturally, timer bar takes remaining space ── */
+  .gh-diffrow { display:flex; align-items:center; gap:6px; margin-bottom:8px; flex-wrap:wrap; }
+  .gh-diff-btn { padding:5px 10px; border-radius:7px; font-size:11px; font-weight:600; border:1px solid; transition:all .2s; white-space:nowrap; flex-shrink:0; }
+  .gh-timerbar-wrap { flex:1; min-width:48px; height:5px; background:rgba(255,255,255,0.08); border-radius:4px; overflow:hidden; }
+  .gh-timerbar-fill { height:100%; border-radius:4px; transition:width 1s linear, background .3s; }
+
+  /* ── Canvas wrapper ── */
+  .gh-canvas-wrap { width:100%; position:relative; border-radius:14px; overflow:hidden; border:1px solid rgba(255,255,255,0.1); }
+  .gh-canvas { display:block; width:100%; height:auto; touch-action:none; user-select:none; }
+
+  /* ── Hint ── */
+  .gh-hint { text-align:center; font-size:12px; color:rgba(255,255,255,0.32); margin-top:8px; min-height:18px; }
+
+  /* ── Combo badge (absolute inside gh-wrap) ── */
+  .gh-combo-badge { position:absolute; top:0; right:0; background:#FFD700; color:#0A0F1C; font-weight:700; font-size:12px; border-radius:8px; padding:4px 10px; pointer-events:none; }
+
+  /* ── Overlay ── */
+  .gh-overlay { position:absolute; inset:0; background:rgba(10,15,28,0.78); display:flex; align-items:center; justify-content:center; z-index:20; padding:12px; box-sizing:border-box; overflow-x:hidden }
+  .gh-card { background:rgba(12,20,40,0.97); border:1px solid rgba(103,227,249,0.16); border-radius:16px; padding:20px 18px 18px; text-align:center; width:100%; max-width:300px; color:#fff; box-sizing:border-box; }
+  .gh-card h2 { font-size:clamp(15px,4vw,18px); font-weight:700; color:#67E3F9; margin:0 0 10px; }
+  .gh-card ul { font-size:12px; color:rgba(255,255,255,0.6); line-height:1.9; margin:0 0 14px; text-align:left; padding-left:16px; }
+  .gh-card-sub { font-size:11px; color:rgba(255,255,255,0.3); margin-bottom:12px; }
+
+  /* ── Overlay button rows: wrap on small screens ── */
+  .gh-btn-row { display:flex; gap:8px; justify-content:center; flex-wrap:wrap; }
+  .gh-btn-pri { background:#67E3F9; color:#0A0F1C; border:none; border-radius:8px; padding:9px 16px; font-size:13px; font-weight:700; cursor:pointer; white-space:nowrap; }
+  .gh-btn-sec { background:transparent; color:#fff; border:1px solid rgba(255,255,255,0.22); border-radius:8px; padding:9px 14px; font-size:13px; cursor:pointer; white-space:wrap; }
+  .gh-diff-start { border:none; border-radius:8px; padding:9px 16px; font-size:12px; font-weight:700; cursor:pointer; white-space:nowrap; }
+
+  /* ── End stats ── */
+  .gh-end-stats { font-size:12px; color:rgba(255,255,255,0.55); line-height:2.1; margin-bottom:14px; }
+
+  /* ── Combo burst ── */
+  .gh-burst { position:absolute; top:38%; left:50%; transform:translateX(-50%); pointer-events:none; font-size:clamp(15px,4.5vw,24px); font-weight:700; color:#FFD700; white-space:nowrap; text-shadow:0 0 16px rgba(255,215,0,0.5); }
+`;
+
 // ─── Game Component ───────────────────────────────────────────────────────────
 const Game = () => {
-  const canvasRef  = useRef(null);
-  const wrapRef    = useRef(null);
-  const animRef    = useRef(null);
-  const timerRef   = useRef(null);
-  const globalT    = useRef(0);
-  const flashes    = useRef([]);
-  const objects    = useRef([]);
-  const stateRef   = useRef("idle");
-  const scoreR     = useRef(0);
-  const foundR     = useRef(0);
-  const comboR     = useRef(0);
-  const missesR    = useRef(0);
-  const timeLeftR  = useRef(45);
-  const audio      = useRef(null);
-  const muteR      = useRef(false);
-  const diffR      = useRef("easy");
+  const canvasRef = useRef(null);
+  const wrapRef   = useRef(null);
+  const animRef   = useRef(null);
+  const timerRef  = useRef(null);
+  const globalT   = useRef(0);
+  const flashes   = useRef([]);
+  const objects   = useRef([]);
+  const stateRef  = useRef("idle");
+  const scoreR    = useRef(0);
+  const foundR    = useRef(0);
+  const comboR    = useRef(0);
+  const missesR   = useRef(0);
+  const timeLeftR = useRef(45);
+  const audio     = useRef(null);
+  const muteR     = useRef(false);
+  const diffR     = useRef("easy");
 
   const [gameState,  setGameState]  = useState("idle");
   const [diff,       setDiff]       = useState("easy");
@@ -271,15 +320,14 @@ const Game = () => {
   useEffect(() => { audio.current = createAudio(); }, []);
   function sfx(fn, ...args) { if (!muteR.current && audio.current) audio.current[fn](...args); }
 
-  // keep diffR in sync
   useEffect(() => { diffR.current = diff; }, [diff]);
 
-  // ─── Responsive canvas ────────────────────────────────────────────────────
+  // ─── Responsive canvas ──────────────────────────────────────────────────────
   useEffect(() => {
     function resize() {
       if (!wrapRef.current) return;
       const w = Math.min(Math.floor(wrapRef.current.getBoundingClientRect().width), 700);
-      const h = Math.max(Math.round(w * 0.62), 270);
+      const h = Math.max(Math.round(w * 0.62), 220);
       setCanvasSize({ w, h });
     }
     resize();
@@ -288,7 +336,7 @@ const Game = () => {
     return () => ro.disconnect();
   }, []);
 
-  // ─── Draw ─────────────────────────────────────────────────────────────────
+  // ─── Draw ───────────────────────────────────────────────────────────────────
   const drawFrame = useCallback(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -296,13 +344,11 @@ const Game = () => {
     const ctx = canvas.getContext("2d");
     ctx.clearRect(0, 0, w, h);
 
-    // Room walls + floor
     ctx.fillStyle = "#C8DAEC"; ctx.fillRect(0, 0, w, Math.round(h * 0.54));
     ctx.fillStyle = "#B5C8D4"; ctx.fillRect(0, Math.round(h * 0.54), w, h);
     ctx.fillStyle = "rgba(0,0,0,0.06)"; ctx.fillRect(0, Math.round(h * 0.52), w, 8);
     ctx.fillStyle = "#C4B9AA"; ctx.fillRect(0, h - 10, w, 10);
 
-    // Window
     const wx = Math.round(w * 0.73), wy = 16, ww = Math.round(w * 0.19), wh = Math.round(h * 0.26);
     ctx.fillStyle = "#A8CCE8"; ctx.fillRect(wx, wy, ww, wh);
     ctx.strokeStyle = "#7FA8C4"; ctx.lineWidth = 2;
@@ -310,43 +356,33 @@ const Game = () => {
     ctx.beginPath(); ctx.moveTo(wx + ww / 2, wy); ctx.lineTo(wx + ww / 2, wy + wh); ctx.stroke();
     ctx.beginPath(); ctx.moveTo(wx, wy + wh / 2); ctx.lineTo(wx + ww, wy + wh / 2); ctx.stroke();
 
-    // Wall frame
     ctx.fillStyle = "#7B5E3A"; ctx.fillRect(Math.round(w * 0.07), 18, Math.round(w * 0.17), Math.round(h * 0.23));
     ctx.fillStyle = "#DDEAF5"; ctx.fillRect(Math.round(w * 0.08), 22, Math.round(w * 0.15), Math.round(h * 0.19));
 
-    // Objects
     const cfg = DIFFS[diffR.current];
     const sorted = [...objects.current].sort((a, b) => a.y - b.y);
     globalT.current += 0.016;
 
     for (const o of sorted) {
       if (o.found) continue;
-
-      // Advance pulse timer
       o.pulseTimer += 0.016;
       if (o.isImp && o.pulseTimer >= o.pulseInterval) {
-        o.pulsing = true;
-        o.pulseProgress = 0;
-        o.pulseTimer = 0;
+        o.pulsing = true; o.pulseProgress = 0; o.pulseTimer = 0;
         o.pulseInterval = cfg.pulseEvery + randFloat(-1.0, 1.0);
       }
       if (o.pulsing) {
         o.pulseProgress += 0.07;
         if (o.pulseProgress >= Math.PI) { o.pulsing = false; o.pulseProgress = 0; }
       }
-
-      // Offsets
       let offX = 0, offY = 0;
       if (o.isImp && o.pulsing) {
         const s = Math.sin(o.pulseProgress);
         offX = Math.cos(o.pulseProgress * 1.3) * cfg.pulseAmt * s;
         offY = s * cfg.pulseAmt * 0.5;
       } else if (o.isDecoy) {
-        // Decoys move more obviously but never stop — trying to fool the player
         offX = Math.sin(globalT.current * 1.4 + o.decoyOffset) * 1.6;
         offY = Math.cos(globalT.current * 1.0 + o.decoyOffset) * 0.8;
       }
-
       ctx.save();
       ctx.globalAlpha = o.isImp ? cfg.alpha : 1.0;
       ctx.translate(o.x + o.w / 2 + offX, o.y + o.h / 2 + offY);
@@ -354,10 +390,8 @@ const Game = () => {
       ctx.restore();
     }
 
-    // Click flash effects
     flashes.current = flashes.current.filter(f => {
-      ctx.save();
-      ctx.globalAlpha = f.a;
+      ctx.save(); ctx.globalAlpha = f.a;
       if (f.hit) {
         ctx.strokeStyle = "#1D9E75"; ctx.lineWidth = 2.5;
         ctx.beginPath(); ctx.arc(f.x, f.y, f.r, 0, Math.PI * 2); ctx.stroke();
@@ -365,9 +399,8 @@ const Game = () => {
         ctx.beginPath(); ctx.arc(f.x, f.y, f.r * 0.5, 0, Math.PI * 2); ctx.stroke();
       } else {
         ctx.strokeStyle = "#E24B4A"; ctx.lineWidth = 2.5;
-        const s = 10;
-        ctx.beginPath(); ctx.moveTo(f.x - s, f.y - s); ctx.lineTo(f.x + s, f.y + s); ctx.stroke();
-        ctx.beginPath(); ctx.moveTo(f.x + s, f.y - s); ctx.lineTo(f.x - s, f.y + s); ctx.stroke();
+        ctx.beginPath(); ctx.moveTo(f.x - 10, f.y - 10); ctx.lineTo(f.x + 10, f.y + 10); ctx.stroke();
+        ctx.beginPath(); ctx.moveTo(f.x + 10, f.y - 10); ctx.lineTo(f.x - 10, f.y + 10); ctx.stroke();
       }
       ctx.restore();
       f.r += 2; f.a -= 0.065;
@@ -380,30 +413,22 @@ const Game = () => {
     animRef.current = requestAnimationFrame(animLoop);
   }, [drawFrame]);
 
-  // ─── Start ────────────────────────────────────────────────────────────────
+  // ─── Start ──────────────────────────────────────────────────────────────────
   const startGame = useCallback((overrideDiff) => {
     const d = overrideDiff || diffR.current;
     const cfg = DIFFS[d];
     const { w, h } = canvasSize;
     const objs = buildScene(w, h, d);
-    objects.current  = objs;
-    flashes.current  = [];
-    globalT.current  = 0;
-    scoreR.current   = 0;
-    foundR.current   = 0;
-    comboR.current   = 0;
-    missesR.current  = 0;
-    timeLeftR.current = cfg.time;
+    objects.current = objs; flashes.current = []; globalT.current = 0;
+    scoreR.current = 0; foundR.current = 0; comboR.current = 0;
+    missesR.current = 0; timeLeftR.current = cfg.time;
     stateRef.current = "playing";
 
-    const imp = objs.filter(o => o.isImp).length;
-    setTotalImp(imp);
+    setTotalImp(objs.filter(o => o.isImp).length);
     setFound(0); setScore(0); setMisses(0); setCombo(0);
     setTimeLeft(cfg.time);
     setHint("Impostors pulse briefly — blink and you'll miss it!");
-    setGameState("playing");
-    setEndResult(null);
-    setComboBurst(null);
+    setGameState("playing"); setEndResult(null); setComboBurst(null);
 
     if (animRef.current) cancelAnimationFrame(animRef.current);
     animRef.current = requestAnimationFrame(animLoop);
@@ -411,16 +436,14 @@ const Game = () => {
     clearInterval(timerRef.current);
     let t = cfg.time;
     timerRef.current = setInterval(() => {
-      t--;
-      timeLeftR.current = t;
-      setTimeLeft(t);
+      t--; timeLeftR.current = t; setTimeLeft(t);
       if (t <= 5 && t > 0) sfx("urgentTick");
       else if (t > 5 && t % 10 === 0) sfx("tick");
       if (t <= 0) { clearInterval(timerRef.current); doEndGame(false); }
     }, 1000);
   }, [canvasSize, animLoop]); // eslint-disable-line
 
-  // ─── End ──────────────────────────────────────────────────────────────────
+  // ─── End ────────────────────────────────────────────────────────────────────
   const doEndGame = useCallback((won) => {
     clearInterval(timerRef.current);
     cancelAnimationFrame(animRef.current);
@@ -428,15 +451,14 @@ const Game = () => {
     const objs = objects.current;
     const fnd   = objs.filter(o => o.isImp && o.found).length;
     const total = objs.filter(o => o.isImp).length;
-    const tl    = timeLeftR.current;
-    const bonus = won ? Math.round(tl * 6) : 0;
+    const bonus = won ? Math.round(timeLeftR.current * 6) : 0;
     const final = scoreR.current + bonus;
     won ? sfx("win") : sfx("lose");
     setEndResult({ won, score: scoreR.current, bonus, final, found: fnd, total, misses: missesR.current });
     setGameState("over");
   }, []); // eslint-disable-line
 
-  // ─── Interaction ──────────────────────────────────────────────────────────
+  // ─── Interaction ────────────────────────────────────────────────────────────
   const handleInteraction = useCallback((clientX, clientY) => {
     if (stateRef.current !== "playing") return;
     const canvas = canvasRef.current;
@@ -450,23 +472,18 @@ const Game = () => {
     let hit = false;
     for (const o of objects.current) {
       if (!o.isImp || o.found) continue;
-      const offX = (o.isImp && o.pulsing) ? Math.cos(o.pulseProgress * 1.3) * cfg.pulseAmt * Math.sin(o.pulseProgress) : 0;
-      const offY = (o.isImp && o.pulsing) ? Math.sin(o.pulseProgress) * cfg.pulseAmt * 0.5 : 0;
+      const offX = (o.pulsing) ? Math.cos(o.pulseProgress * 1.3) * cfg.pulseAmt * Math.sin(o.pulseProgress) : 0;
+      const offY = (o.pulsing) ? Math.sin(o.pulseProgress) * cfg.pulseAmt * 0.5 : 0;
       const cx = o.x + o.w / 2 + offX, cy = o.y + o.h / 2 + offY;
       const pad = Math.max(10, Math.min(o.w, o.h) * 0.2);
       if (mx >= cx - o.w / 2 - pad && mx <= cx + o.w / 2 + pad &&
           my >= cy - o.h / 2 - pad && my <= cy + o.h / 2 + pad) {
         o.found = true; hit = true;
-        comboR.current += 1;
-        foundR.current += 1;
+        comboR.current += 1; foundR.current += 1;
         const c = comboR.current;
-        const timePts  = Math.round(timeLeftR.current * 2);
-        const comboPts = c >= 3 ? c * 10 : 0;
-        const earned   = 15 + timePts + comboPts;
+        const earned = 15 + Math.round(timeLeftR.current * 2) + (c >= 3 ? c * 10 : 0);
         scoreR.current += earned;
-        setScore(scoreR.current);
-        setFound(foundR.current);
-        setCombo(c);
+        setScore(scoreR.current); setFound(foundR.current); setCombo(c);
         sfx("hit", c);
         if (c >= 2) { sfx("combo", c); setComboBurst({ n: c, key: Date.now() }); }
         flashes.current.push({ x: mx, y: my, r: 8, a: 1, hit: true });
@@ -476,7 +493,6 @@ const Game = () => {
         break;
       }
     }
-
     if (!hit) {
       comboR.current = 0; setCombo(0);
       missesR.current += 1; setMisses(missesR.current);
@@ -500,162 +516,165 @@ const Game = () => {
   const missLeft = cfg.missLimit - misses;
 
   return (
-    <div style={{ minHeight: "100vh", background: "#0A0F1C", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "14px 12px", fontFamily: "'Segoe UI', system-ui, sans-serif", color: "#fff", position: "relative", overflow: "hidden" }}>
-      <StarField />
+    <>
+      <style>{STYLES}</style>
+      <div className="gh-root">
+        <StarField />
+        <div className="gh-wrap">
 
-      <div style={{ position: "relative", zIndex: 10, width: "100%", maxWidth: 720 }}>
-
-        {/* Header */}
-        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 12 }}>
-          <div>
-            <h1 style={{ fontSize: "clamp(18px,5vw,26px)", fontWeight: 700, color: "#67E3F9", margin: 0, letterSpacing: "-0.5px" }}>
-              Prop Hunt
-            </h1>
-            <p style={{ fontSize: 11, color: "rgba(255,255,255,0.32)", margin: "2px 0 0" }}>
-              Catch impostors hiding in plain sight
-            </p>
-          </div>
-          <button onClick={() => { muteR.current = !muteR.current; setMuted(m => !m); }}
-            title={muted ? "Unmute" : "Mute"}
-            style={{ background: "rgba(255,255,255,0.07)", border: "1px solid rgba(255,255,255,0.12)", borderRadius: 8, padding: "6px 12px", fontSize: 18, cursor: "pointer", color: "rgba(255,255,255,0.7)", lineHeight: 1 }}>
-            {muted ? "🔇" : "🔊"}
-          </button>
-        </div>
-
-        {/* HUD */}
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: 7, marginBottom: 9 }}>
-          {[
-            { label: "Score",   val: score,                                                              col: "#fff"    },
-            { label: "Found",   val: `${found}/${totalImp}`,                                             col: "#67E3F9" },
-            { label: "Time",    val: timeLeft,                                                           col: tColor    },
-            { label: "Chances", val: gameState === "playing" ? `${missLeft}/${cfg.missLimit}` : "—",     col: missLeft <= 1 && gameState === "playing" ? "#E24B4A" : "#fff" },
-          ].map(s => (
-            <div key={s.label} style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 10, padding: "7px 6px", textAlign: "center" }}>
-              <div style={{ fontSize: 9, color: "rgba(255,255,255,0.32)", textTransform: "uppercase", letterSpacing: ".07em", marginBottom: 2 }}>{s.label}</div>
-              <div style={{ fontSize: "clamp(13px,3.5vw,20px)", fontWeight: 700, color: s.col, transition: "color .3s" }}>{s.val}</div>
+          {/* Header */}
+          <div className="gh-header">
+            <div style={{ minWidth: 0 }}>
+              <h1 className="gh-title">Prop Hunt</h1>
+              <p className="gh-sub">Catch impostors hiding in plain sight</p>
             </div>
-          ))}
-        </div>
-
-        {/* Difficulty + Timer bar */}
-        <div style={{ display: "flex", alignItems: "center", gap: 7, marginBottom: 9, flexWrap: "wrap" }}>
-          {Object.entries(DIFFS).map(([key, d]) => (
-            <button key={key}
-              onClick={() => { if (gameState !== "playing") { setDiff(key); diffR.current = key; } }}
-              title={d.desc}
-              style={{ padding: "5px 11px", borderRadius: 7, fontSize: 11, fontWeight: 600, cursor: gameState === "playing" ? "not-allowed" : "pointer", border: "1px solid", background: diff === key ? d.color : "transparent", borderColor: diff === key ? d.color : "rgba(255,255,255,0.16)", color: diff === key ? "#fff" : "rgba(255,255,255,0.42)", transition: "all .2s", opacity: gameState === "playing" ? 0.55 : 1 }}>
-              {d.label}
+            <button className="gh-mute"
+              onClick={() => { muteR.current = !muteR.current; setMuted(m => !m); }}
+              title={muted ? "Unmute" : "Mute"}>
+              {muted ? "🔇" : "🔊"}
             </button>
-          ))}
-          <div style={{ flex: 1, height: 5, background: "rgba(255,255,255,0.08)", borderRadius: 4, overflow: "hidden", minWidth: 60 }}>
-            <div style={{ height: "100%", width: `${timePct}%`, background: tColor, borderRadius: 4, transition: "width 1s linear, background .3s" }} />
           </div>
-        </div>
 
-        {/* Canvas */}
-        <div ref={wrapRef} style={{ width: "100%", position: "relative", borderRadius: 14, overflow: "hidden", border: "1px solid rgba(255,255,255,0.1)", cursor: gameState === "playing" ? "crosshair" : "default" }}>
-          <canvas
-            ref={canvasRef}
-            width={canvasSize.w}
-            height={canvasSize.h}
-            style={{ display: "block", width: "100%", height: "auto", touchAction: "none", userSelect: "none" }}
-            onClick={onCanvasClick}
-            onTouchStart={onCanvasTouch}
-          />
+          {/* HUD — 4 cols on ≥361px, 2×2 on tiny screens */}
+          <div className="gh-hud">
+            {[
+              { label: "Score",   val: score,   col: "#fff" },
+              { label: "Found",   val: `${found}/${totalImp}`, col: "#67E3F9" },
+              { label: "Time",    val: timeLeft, col: tColor },
+              { label: "Chances", val: gameState === "playing" ? `${missLeft}/${cfg.missLimit}` : "—",
+                col: missLeft <= 1 && gameState === "playing" ? "#E24B4A" : "#fff" },
+            ].map(s => (
+              <div key={s.label} className="gh-stat">
+                <div className="gh-stat-lbl">{s.label}</div>
+                <div className="gh-stat-val" style={{ color: s.col }}>{s.val}</div>
+              </div>
+            ))}
+          </div>
 
-          {/* Combo burst */}
+          {/* Difficulty buttons + timer bar */}
+          <div className="gh-diffrow">
+            {Object.entries(DIFFS).map(([key, d]) => (
+              <button key={key} className="gh-diff-btn"
+                onClick={() => { if (gameState !== "playing") { setDiff(key); diffR.current = key; } }}
+                title={d.desc}
+                style={{
+                  background: diff === key ? d.color : "transparent",
+                  borderColor: diff === key ? d.color : "rgba(255,255,255,0.16)",
+                  color: diff === key ? "#fff" : "rgba(255,255,255,0.5)",
+                  cursor: gameState === "playing" ? "not-allowed" : "pointer",
+                  opacity: gameState === "playing" ? 0.55 : 1,
+                }}>
+                {d.label}
+              </button>
+            ))}
+            <div className="gh-timerbar-wrap">
+              <div className="gh-timerbar-fill" style={{ width: `${timePct}%`, background: tColor }} />
+            </div>
+          </div>
+
+          {/* Canvas */}
+          <div ref={wrapRef} className="gh-canvas-wrap"
+            style={{ cursor: gameState === "playing" ? "crosshair" : "default" }}>
+            <canvas ref={canvasRef} className="gh-canvas"
+              width={canvasSize.w} height={canvasSize.h}
+              onClick={onCanvasClick} onTouchStart={onCanvasTouch} />
+
+            {/* Combo burst */}
+            <AnimatePresence>
+              {comboBurst && (
+                <motion.div key={comboBurst.key} className="gh-burst"
+                  initial={{ scale: 0.4, opacity: 1, y: 0 }}
+                  animate={{ scale: 1.5, opacity: 0, y: -70 }}
+                  transition={{ duration: 0.65, ease: "easeOut" }}
+                  onAnimationComplete={() => setComboBurst(null)}>
+                  COMBO x{comboBurst.n}!
+                </motion.div>
+              )}
+            </AnimatePresence>
+
+            {/* Idle overlay */}
+            <AnimatePresence>
+              {gameState === "idle" && (
+                <div className="gh-overlay">
+                  <motion.div className="gh-card"
+                    initial={{ scale: 0.88, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.9, opacity: 0 }}>
+                    <div style={{ fontSize: 34, marginBottom: 8 }}>🕵️</div>
+                    <h2>How to Play</h2>
+                    <ul>
+                      <li>Impostors <strong style={{ color: "#fff" }}>pulse briefly</strong> — subtle on hard</li>
+                      <li><strong style={{ color: "#EF9F27" }}>Decoys</strong> move constantly to fool you</li>
+                      <li>Chain hits for <strong style={{ color: "#FFD700" }}>COMBO bonuses</strong></li>
+                      <li>Too many misses = <strong style={{ color: "#E24B4A" }}>game over</strong></li>
+                    </ul>
+                    <p className="gh-card-sub">Choose difficulty to start:</p>
+                    <div className="gh-btn-row">
+                      {Object.entries(DIFFS).map(([key, d]) => (
+                        <button key={key} className="gh-diff-start"
+                          style={{ background: d.color, color: "#fff" }}
+                          onClick={() => { setDiff(key); diffR.current = key; setTimeout(() => startGame(key), 10); }}>
+                          {d.label}
+                        </button>
+                      ))}
+                    </div>
+                  </motion.div>
+                </div>
+              )}
+            </AnimatePresence>
+
+            {/* Game Over overlay */}
+            <AnimatePresence>
+              {gameState === "over" && endResult && (
+                <div className="gh-overlay">
+                  <motion.div className="gh-card"
+                    initial={{ scale: 0.88, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.9, opacity: 0 }}>
+                    <div style={{ fontSize: 34, marginBottom: 8 }}>{endResult.won ? "🎉" : "💀"}</div>
+                    <h2 style={{ color: endResult.won ? "#1D9E75" : "#E24B4A" }}>
+                      {endResult.won ? "All Caught!" : "Game Over"}
+                    </h2>
+                    <div className="gh-end-stats">
+                      <div>Found <strong style={{ color: "#fff" }}>{endResult.found}/{endResult.total}</strong></div>
+                      <div>Misses <strong style={{ color: "#fff" }}>{endResult.misses}</strong></div>
+                      <div>Score&nbsp;
+                        <strong style={{ color: "#fff" }}>{endResult.score}</strong>
+                        {endResult.won && endResult.bonus > 0 && (
+                          <> + <span style={{ color: "#1D9E75" }}>+{endResult.bonus}</span> = <strong style={{ color: "#67E3F9", fontSize: 15 }}>{endResult.final}</strong></>
+                        )}
+                      </div>
+                    </div>
+                    <div className="gh-btn-row">
+                      <button className="gh-btn-pri" onClick={() => startGame()}>Play Again</button>
+                      {endResult.won && diff !== "hard" && (
+                        <button className="gh-btn-sec" onClick={() => {
+                          const nxt = diff === "easy" ? "medium" : "hard";
+                          setDiff(nxt); diffR.current = nxt;
+                          setTimeout(() => startGame(nxt), 20);
+                        }}>
+                          {diff === "easy" ? "Try Medium" : "Try Hard"} ▶
+                        </button>
+                      )}
+                    </div>
+                  </motion.div>
+                </div>
+              )}
+            </AnimatePresence>
+          </div>
+
+          {/* Hint */}
+          <p className="gh-hint">{hint}</p>
+
+          {/* Combo badge */}
           <AnimatePresence>
-            {comboBurst && (
-              <motion.div key={comboBurst.key}
-                initial={{ scale: 0.4, opacity: 1, y: 0 }}
-                animate={{ scale: 1.5, opacity: 0, y: -70 }}
-                transition={{ duration: 0.65, ease: "easeOut" }}
-                onAnimationComplete={() => setComboBurst(null)}
-                style={{ position: "absolute", top: "38%", left: "50%", transform: "translateX(-50%)", pointerEvents: "none", fontSize: "clamp(16px,4.5vw,24px)", fontWeight: 700, color: "#FFD700", whiteSpace: "nowrap", textShadow: "0 0 16px rgba(255,215,0,0.5)" }}>
-                COMBO x{comboBurst.n}!
+            {combo >= 2 && gameState === "playing" && (
+              <motion.div key={combo} className="gh-combo-badge"
+                initial={{ opacity: 0, y: 4 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}>
+                x{combo} COMBO
               </motion.div>
             )}
           </AnimatePresence>
 
-          {/* Idle overlay */}
-          <AnimatePresence>
-            {gameState === "idle" && (
-              <Overlay>
-                <motion.div initial={{ scale: 0.88, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.9, opacity: 0 }} style={cardStyle}>
-                  <div style={{ fontSize: 36, marginBottom: 8 }}>🕵️</div>
-                  <h2 style={{ fontSize: 17, fontWeight: 700, color: "#67E3F9", margin: "0 0 10px" }}>How to Play</h2>
-                  <ul style={{ fontSize: 12, color: "rgba(255,255,255,0.6)", lineHeight: 2.0, marginBottom: 18, textAlign: "left", paddingLeft: 16 }}>
-                    <li>Impostors <strong style={{ color: "#fff" }}>pulse briefly</strong> — super subtle on hard</li>
-                    <li><strong style={{ color: "#EF9F27" }}>Decoys</strong> move constantly to fool you</li>
-                    <li>Chain hits for <strong style={{ color: "#FFD700" }}>COMBO bonuses</strong></li>
-                    <li>Too many misses = <strong style={{ color: "#E24B4A" }}>game over</strong></li>
-                  </ul>
-                  <p style={{ fontSize: 11, color: "rgba(255,255,255,0.3)", marginBottom: 14 }}>Choose difficulty to start:</p>
-                  <div style={{ display: "flex", gap: 8, justifyContent: "center", flexWrap: "wrap" }}>
-                    {Object.entries(DIFFS).map(([key, d]) => (
-                      <button key={key}
-                        onClick={() => { setDiff(key); diffR.current = key; setTimeout(() => startGame(key), 10); }}
-                        style={{ ...btnPri, background: d.color, fontSize: 12, padding: "9px 18px" }}>
-                        {d.label}
-                      </button>
-                    ))}
-                  </div>
-                </motion.div>
-              </Overlay>
-            )}
-          </AnimatePresence>
-
-          {/* Game Over overlay */}
-          <AnimatePresence>
-            {gameState === "over" && endResult && (
-              <Overlay>
-                <motion.div initial={{ scale: 0.88, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.9, opacity: 0 }} style={cardStyle}>
-                  <div style={{ fontSize: 36, marginBottom: 8 }}>{endResult.won ? "🎉" : "💀"}</div>
-                  <h2 style={{ fontSize: 17, fontWeight: 700, color: endResult.won ? "#1D9E75" : "#E24B4A", margin: "0 0 12px" }}>
-                    {endResult.won ? "All Caught!" : "Game Over"}
-                  </h2>
-                  <div style={{ fontSize: 12, color: "rgba(255,255,255,0.55)", lineHeight: 2.1, marginBottom: 16 }}>
-                    <div>Found <strong style={{ color: "#fff" }}>{endResult.found}/{endResult.total}</strong></div>
-                    <div>Misses <strong style={{ color: "#fff" }}>{endResult.misses}</strong></div>
-                    <div>Score&nbsp;
-                      <strong style={{ color: "#fff" }}>{endResult.score}</strong>
-                      {endResult.won && endResult.bonus > 0 && (
-                        <> + <span style={{ color: "#1D9E75" }}>+{endResult.bonus}</span> = <strong style={{ color: "#67E3F9", fontSize: 15 }}>{endResult.final}</strong></>
-                      )}
-                    </div>
-                  </div>
-                  <div style={{ display: "flex", gap: 8, justifyContent: "center", flexWrap: "wrap" }}>
-                    <button style={btnPri} onClick={() => startGame()}>Play Again</button>
-                    {endResult.won && diff !== "hard" && (
-                      <button style={btnSec} onClick={() => {
-                        const nxt = diff === "easy" ? "medium" : "hard";
-                        setDiff(nxt); diffR.current = nxt;
-                        setTimeout(() => startGame(nxt), 20);
-                      }}>
-                        {diff === "easy" ? "Try Medium" : "Try Hard"} ▶
-                      </button>
-                    )}
-                  </div>
-                </motion.div>
-              </Overlay>
-            )}
-          </AnimatePresence>
         </div>
-
-        {/* Hint */}
-        <p style={{ textAlign: "center", fontSize: 12, color: "rgba(255,255,255,0.32)", marginTop: 9, minHeight: 18, transition: "opacity .2s" }}>{hint}</p>
-
-        {/* Combo badge */}
-        <AnimatePresence>
-          {combo >= 2 && gameState === "playing" && (
-            <motion.div key={combo} initial={{ opacity: 0, y: 4 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}
-              style={{ position: "absolute", top: 0, right: 0, background: "#FFD700", color: "#0A0F1C", fontWeight: 700, fontSize: 12, borderRadius: 8, padding: "4px 10px" }}>
-              x{combo} COMBO
-            </motion.div>
-          )}
-        </AnimatePresence>
       </div>
-    </div>
+    </>
   );
 };
 
@@ -677,35 +696,5 @@ const StarField = () => (
     ))}
   </>
 );
-
-// ─── Shared Styles ────────────────────────────────────────────────────────────
-const Overlay = ({ children }) => (
-  <div style={{ position: "absolute", inset: 0, background: "rgba(10,15,28,0.78)", display: "flex", alignItems: "center", justifyContent: "center", zIndex: 20 }}>
-    {children}
-  </div>
-);
-
-const cardStyle = {
-  background: "rgba(12,20,40,0.97)",
-  border: "1px solid rgba(103,227,249,0.16)",
-  borderRadius: 16,
-  padding: "24px 22px 20px",
-  textAlign: "center",
-  maxWidth: 310,
-  width: "92%",
-  color: "#fff",
-};
-
-const btnPri = {
-  background: "#67E3F9", color: "#0A0F1C",
-  border: "none", borderRadius: 8, padding: "9px 20px",
-  fontSize: 13, fontWeight: 700, cursor: "pointer",
-};
-const btnSec = {
-  background: "transparent", color: "#fff",
-  border: "1px solid rgba(255,255,255,0.22)",
-  borderRadius: 8, padding: "9px 16px",
-  fontSize: 13, cursor: "pointer",
-};
 
 export default Game;

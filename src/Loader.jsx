@@ -1,5 +1,5 @@
 import { motion } from "motion/react";
-import logo from "./assets/logo.png";
+import logo from "./assets/WL-F.png";
 
 const Loader = () => {
 
@@ -54,7 +54,7 @@ const Loader = () => {
         <motion.img
           src={logo}
           alt="Furonex Logo"
-          className="w-20 md:w-28 z-10 drop-shadow-[0_0_25px_rgba(47,128,237,0.8)]"
+          className="w-20 md:w-[130px] z-10 drop-shadow-[0_0_25px_rgba(47,128,237,0.8)]"
           animate={{
             scale: [1, 1.08, 1],
           }}
