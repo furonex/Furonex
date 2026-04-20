@@ -2,7 +2,8 @@ import React, { useMemo } from "react";
 import { motion } from "motion/react";
 import { Code, Search, Share2, BarChart } from "lucide-react";
 import { Helmet } from "react-helmet";
-import heroImg from "../../assets/services.png"; // ✅ PNG added
+import { Link } from "react-router-dom";
+import heroImg from "../../assets/services.png";
 
 const Services = () => {
 
@@ -12,32 +13,35 @@ const Services = () => {
       description:
         "Modern, responsive and scalable websites tailored for your business growth.",
       icon: Code,
-      border: "border-green-400"
+      border: "border-green-400",
+      path: "/services/web-development"
     },
     {
       title: "SEO Optimization",
       description:
         "Improve search rankings and organic traffic with strategic SEO solutions.",
       icon: Search,
-      border: "border-yellow-500"
+      border: "border-yellow-500",
+      path: "/services/seo"
     },
     {
       title: "SMO",
       description:
         "Boost your brand presence across social media platforms and increase engagement.",
       icon: Share2,
-      border: "border-pink-500"
+      border: "border-pink-500",
+      path: "/services/smo"
     },
     {
       title: "Digital Marketing",
       description:
         "Data-driven marketing campaigns to grow your online visibility and conversions.",
       icon: BarChart,
-      border: "border-violet-500"
+      border: "border-violet-500",
+      path: "/services/digital-marketing"
     },
   ];
 
-  // ⭐ Stable Stars
   const stars = useMemo(() => {
     return Array.from({ length: 25 }).map(() => ({
       top: `${Math.random() * 100}%`,
@@ -50,7 +54,10 @@ const Services = () => {
     <>
       <Helmet>
         <title>Website Development & SEO Services | Furonex</title>
-        <meta name="description" content="Explore our website development, SEO, and digital marketing services." />
+        <meta
+          name="description"
+          content="Explore our website development, SEO, and digital marketing services."
+        />
       </Helmet>
 
       <section className="relative bg-[#0A0F1C] py-20 px-6 text-white overflow-hidden">
@@ -66,10 +73,9 @@ const Services = () => {
           />
         ))}
 
-        {/* ================= HERO / INTRO ================= */}
+        {/* HERO */}
         <div className="relative z-10 max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-center mb-20">
 
-          {/* LEFT TEXT */}
           <div>
             <span className="inline-block px-4 py-1 text-sm bg-cyan-500/20 text-cyan-400 rounded-full mb-4">
               Our Mission
@@ -80,7 +86,7 @@ const Services = () => {
             </h2>
 
             <p className="text-gray-400 leading-relaxed mb-4">
-              At Furonex, we help businesses establish and grow their digital presence 
+              At Furonex, we help businesses establish and grow their digital presence
               through smart websites, performance marketing, and scalable strategies.
             </p>
 
@@ -88,7 +94,6 @@ const Services = () => {
               Currently working with startups and growing brands 🚀
             </p>
 
-            {/* Tabs */}
             <div className="flex flex-wrap gap-5 mt-6 text-sm">
               {["Social Media", "Google Ads", "SEO", "WEBSITE"].map((item, i) => (
                 <span
@@ -101,7 +106,6 @@ const Services = () => {
             </div>
           </div>
 
-          {/* RIGHT IMAGE */}
           <motion.div
             initial={{ x: 60, opacity: 0 }}
             whileInView={{ x: 0, opacity: 1 }}
@@ -116,9 +120,7 @@ const Services = () => {
           </motion.div>
         </div>
 
-       
-
-        {/* ================= SERVICES GRID ================= */}
+        {/* TITLE */}
         <div className="max-w-6xl mx-auto text-center mb-16 relative z-10">
           <h2 className="text-4xl md:text-5xl font-bold mb-4">
             Our Services
@@ -129,39 +131,50 @@ const Services = () => {
           </p>
         </div>
 
-        <div className="max-w-6xl mx-auto grid md:grid-cols-2 lg:grid-cols-4 gap-8 relative z-10">
+        {/* CARDS */}
+        <div className="max-w-6xl mx-auto grid md:grid-cols-2 lg:grid-cols-4 gap-8 items-stretch relative z-10">
 
           {services.map((service, index) => {
             const Icon = service.icon;
 
             return (
-              <motion.div
-                key={index}
-                whileHover={{ y: -10, scale: 1.03 }}
-                initial={{ opacity: 0, y: 40 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-                className={`bg-[#111827] p-8 rounded-2xl border-[3px] ${service.border}
-                hover:border-[#2F80ED]
-                hover:shadow-[0_0_35px_rgba(47,128,237,0.4)]
-                transition-all duration-300`}
-              >
+              <Link to={service.path} key={index} className="h-full">
+                <motion.div
+                  whileHover={{ y: -10, scale: 1.03 }}
+                  initial={{ opacity: 0, y: 40 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: index * 0.1 }}
+                  className={`bg-[#111827] p-8 rounded-2xl border-[3px] ${service.border}
+                  hover:border-[#2F80ED]
+                  hover:shadow-[0_0_35px_rgba(47,128,237,0.4)]
+                  transition-all duration-300 cursor-pointer
+                  h-full flex flex-col justify-between min-h-[260px]`}
+                >
 
-                <div className="mb-6 flex justify-center">
-                  <div className="p-4 rounded-xl bg-[#1F2937] text-[#2F80ED]">
-                    <Icon size={28} />
+                  {/* Top */}
+                  <div>
+                    <div className="mb-6 flex justify-center">
+                      <div className="p-4 rounded-xl bg-[#1F2937] text-[#2F80ED]">
+                        <Icon size={28} />
+                      </div>
+                    </div>
+
+                    <h3 className="text-xl font-semibold mb-3 text-center">
+                      {service.title}
+                    </h3>
+
+                    <p className="text-gray-400 text-sm text-center">
+                      {service.description}
+                    </p>
                   </div>
-                </div>
 
-                <h3 className="text-xl font-semibold mb-3 text-center">
-                  {service.title}
-                </h3>
+                  {/* Bottom CTA */}
+                  <div className="mt-6 text-center text-[#2F80ED] text-sm font-medium">
+                    Learn More →
+                  </div>
 
-                <p className="text-gray-400 text-sm text-center">
-                  {service.description}
-                </p>
-
-              </motion.div>
+                </motion.div>
+              </Link>
             );
           })}
         </div>

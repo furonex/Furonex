@@ -16,6 +16,7 @@ import WhatsappButton from "./components/WhatsappButton";
 import QuotePopup from "./components/QuotePopup";
 import ScrollToTop from "./components/ScrollToTop ";
 import Game from "./Pages/Game";
+import ServiceDetails from "./Pages/ServiceDetails";
 
 const App = () => {
 
@@ -58,6 +59,10 @@ const App = () => {
         <Route path="/portfolio" element={<Portfolio />} />
         <Route path="/pricing" element={<Pricing setShowPopup={setShowPopup}/>} />
         <Route path="/game" element={<Game />} />
+        <Route path="/services/web-development" element={<ServiceDetails />} />
+<Route path="/services/seo" element={<ServiceDetails />} />
+<Route path="/services/smo" element={<ServiceDetails />} />
+<Route path="/services/digital-marketing" element={<ServiceDetails />} />
       </Routes>
 
       <WhatsappButton />
