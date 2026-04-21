@@ -2,13 +2,11 @@ import { motion } from "motion/react";
 import { useState } from "react";
 
 const QuotePopup = ({ isOpen, setIsOpen }) => {
-
   const [form, setForm] = useState({
     name: "",
     phone: "",
     email: "",
     services: [],
-    website: "",
     message: "",
   });
 
@@ -35,86 +33,139 @@ Name: ${form.name}%0A
 Phone: ${form.phone}%0A
 Email: ${form.email}%0A
 Services: ${form.services.join(", ")}%0A
-Website: ${form.website}%0A
 Message: ${form.message}`;
 
     window.open(`https://wa.me/${phone}?text=${text}`, "_blank");
   };
 
   return (
-    <div className="fixed inset-0 bg-black/70 z-[999] flex items-center justify-center">
+    <div className="fixed inset-0 bg-black/70 z-[999] flex items-center justify-center p-3 overflow-y-auto">
 
       <motion.div
-        initial={{ scale: 0.8, opacity: 0 }}
+        initial={{ scale: 0.9, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
-        className="bg-white text-black w-[95%] md:w-[700px] rounded-xl p-6 relative"
+        className="w-full max-w-5xl bg-white rounded-xl shadow-2xl flex flex-col md:flex-row max-h-[90vh] overflow-hidden"
       >
 
-        {/* Close */}
-        <button
-          onClick={() => setIsOpen(false)}
-          className="absolute top-4 right-4 text-xl"
-        >
-          ✕
-        </button>
+        {/* LEFT SECTION (Hidden on Mobile) */}
+        <div className="hidden md:flex md:w-1/2 bg-gradient-to-br from-[#0A0F1C] to-[#1a2a4a] text-white p-6 flex-col justify-between">
 
-        {/* Heading */}
-        <h2 className="text-2xl md:text-3xl font-bold mb-4">
-          To Request A Call Back,
-          <span className="text-[#2F80ED] block">
-            Enter Details Below
-          </span>
-        </h2>
-
-        {/* Form */}
-        <div className="space-y-3">
-
-          <div className="grid md:grid-cols-2 gap-3">
-            <input name="name" placeholder="Name" onChange={handleChange} className="input" />
-            <input name="phone" placeholder="Phone Number" onChange={handleChange} className="input" />
+          <div>
+            <h2 className="text-3xl font-bold leading-tight">
+              Grow Your Business
+            </h2>
+            <p className="mt-3 text-gray-300 text-sm">
+              Get expert SEO, Website & Marketing solutions tailored for you.
+            </p>
           </div>
 
-          <input name="email" placeholder="Email" onChange={handleChange} className="input" />
+          <div className="bg-white/10 backdrop-blur p-4 rounded-lg mt-6">
+            <p className="text-sm text-gray-300">Starting From</p>
+            <h3 className="text-2xl font-bold text-[#2F80ED]">
+              ₹4,999
+            </h3>
+            <p className="text-xs text-gray-400 mt-1">
+              Affordable plans for startups & businesses
+            </p>
+          </div>
 
-          {/* Services */}
-          <div className="border p-3 rounded-lg">
-            <p className="font-semibold mb-2">Select Required Services</p>
+        </div>
 
-            <div className="grid grid-cols-2 gap-2 text-sm">
-              {[
-                "SEO",
-                "SMO",
-                "PPC",
-                "Website Development",
-                "Digital Marketing",
-                "E-commerce SEO",
-              ].map((service) => (
-                <label
+        {/* RIGHT SECTION */}
+        <div className="w-full md:w-1/2 flex flex-col max-h-[90vh]">
+
+          {/* HEADER */}
+          <div className="flex justify-between items-center p-4 border-b bg-white sticky top-0 z-10">
+            <h3 className="text-lg font-semibold">Enquire Now</h3>
+
+            <button
+              onClick={() => setIsOpen(false)}
+              className="text-gray-500 text-xl hover:text-black"
+            >
+              ✕
+            </button>
+          </div>
+
+          {/* SCROLLABLE FORM */}
+          <div className="p-4 overflow-y-auto flex-1 space-y-3">
+
+            <input
+              name="name"
+              placeholder="Name"
+              onChange={handleChange}
+              className="w-full border rounded-lg px-4 py-3 outline-none focus:border-[#2F80ED]"
+            />
+
+            <input
+              name="phone"
+              placeholder="Mobile Number"
+              onChange={handleChange}
+              className="w-full border rounded-lg px-4 py-3 outline-none focus:border-[#2F80ED]"
+            />
+
+            <input
+              name="email"
+              placeholder="Email Address"
+              onChange={handleChange}
+              className="w-full border rounded-lg px-4 py-3 outline-none focus:border-[#2F80ED]"
+            />
+
+            {/* SERVICES */}
+            <div className="border rounded-lg p-3">
+              <p className="text-sm font-semibold mb-2 text-gray-700">
+                Select Services
+              </p>
+
+              <div className="grid grid-cols-2 gap-2 text-sm">
+                {[
+                  "SEO",
+                  "SMO",
+                  "PPC",
+                  "Website Development",
+                  "Digital Marketing",
+                  "E-commerce SEO",
+                ].map((service) => (
+                  <label
                     key={service}
-                    className="flex items-start gap-2 leading-tight cursor-pointer"
+                    className="flex items-center gap-2 cursor-pointer bg-gray-50 px-2 py-1.5 rounded-md hover:bg-gray-100"
                   >
                     <input
                       type="checkbox"
-                      className="mt-[2px] accent-[#2F80ED] min-w-[16px]"
+                      className="accent-[#2F80ED]"
                       onChange={() => handleCheckbox(service)}
                     />
                     <span className="text-gray-700">{service}</span>
                   </label>
-                                ))}
+                ))}
+              </div>
             </div>
+
+            <textarea
+              name="message"
+              placeholder="Tell us about your project..."
+              rows="3"
+              onChange={handleChange}
+              className="w-full border rounded-lg px-4 py-3 outline-none focus:border-[#2F80ED]"
+            />
+
           </div>
 
-          <input name="website" placeholder="Your website (optional)" onChange={handleChange} className="input" />
-          <textarea name="message" placeholder="Message" onChange={handleChange} className="input" />
+          {/* STICKY CTA */}
+          <div className="p-4 border-t bg-white">
+            <button
+              onClick={sendToWhatsApp}
+              className="w-full bg-[#2F80ED] text-white py-3 rounded-lg font-semibold hover:bg-blue-600 transition"
+            >
+              Submit Enquiry
+            </button>
 
-          <button
-            onClick={sendToWhatsApp}
-            className="bg-[#2F80ED] text-white px-5 py-3 rounded-lg w-full"
-          >
-            Submit Enquiry
-          </button>
+            <p className="text-xs text-gray-500 mt-2 text-center">
+              By submitting, you agree to receive calls, WhatsApp & emails.
+            </p>
+          </div>
 
         </div>
+
       </motion.div>
     </div>
   );

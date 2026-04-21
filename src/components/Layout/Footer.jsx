@@ -40,76 +40,68 @@ const Footer = () => {
       <div className="relative z-10 max-w-7xl mx-auto grid md:grid-cols-4 gap-10 mt-6 md:mt-[105px]">
 
         {/* 1️⃣ Brand */}
-        <div>
+        <div className="ml-7">
           <h2 className="text-2xl font-bold text-[#2F80ED] mb-4">
             Furonex
           </h2>
 
-          <p className="text-gray-400 text-sm mb-6 leading-relaxed">
-            Furonex is a results-driven digital agency helping startups and businesses 
-            build high-performance websites, scalable web applications, and strong 
-            online presence. From UI/UX design to full-stack development and digital 
-            growth, we deliver solutions that are fast, modern, and conversion-focused.
-          </p>
+          <p className="text-gray-400 text-sm mb-6 leading-relaxed text-justify max-w-[320px]">
+  Furonex is a results-driven digital agency helping startups and businesses 
+  build high-performance websites, scalable web applications, and strong 
+  online presence. From UI/UX design to full-stack development and digital 
+  growth, we deliver solutions that are fast, modern, and conversion-focused.
+</p>
 
           {/* Social Icons */}
           <div className="flex gap-4">
 
-            {/* Instagram */}
-            <a
-              href="https://www.instagram.com/furonex_?igsh=bGliOWI0Yzk0MTZq"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <motion.div
-                whileHover={{ scale: 1.2 }}
-                className="p-2 rounded-full bg-[#1F2937] hover:bg-gradient-to-tr from-pink-500 via-red-500 to-yellow-500 transition-all"
-              >
-                <Instagram className="text-white" size={18} />
-              </motion.div>
-            </a>
+  {/* Instagram */}
+  <a href="https://www.instagram.com/furonex_?igsh=bGliOWI0Yzk0MTZq" target="_blank">
+    <motion.div
+      whileHover={{ scale: 1.2 }}
+      className="p-2 rounded-full bg-gradient-to-tr from-pink-500 via-red-500 to-yellow-500 
+                 shadow-md hover:shadow-[0_0_15px_rgba(255,80,120,0.8)] transition-all"
+    >
+      <Instagram className="text-white" size={18} />
+    </motion.div>
+  </a>
 
-            {/* LinkedIn */}
-            <a
-              href="https://www.linkedin.com/company/furonex/"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <motion.div
-                whileHover={{ scale: 1.2 }}
-                className="p-2 rounded-full bg-[#1F2937] hover:bg-[#0077B5] transition-all"
-              >
-                <Linkedin className="text-white" size={18} />
-              </motion.div>
-            </a>
+  {/* LinkedIn */}
+  <a href="https://www.linkedin.com/company/furonex/" target="_blank">
+    <motion.div
+      whileHover={{ scale: 1.2 }}
+      className="p-2 rounded-full bg-[#0077B5] 
+                 shadow-md hover:shadow-[0_0_15px_rgba(0,119,181,0.8)] transition-all"
+    >
+      <Linkedin className="text-white" size={18} />
+    </motion.div>
+  </a>
 
-            {/* YouTube */}
-            <a
-              href="https://youtube.com/@furonex?si=N44oUj6OfAEMZ3E-"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <motion.div
-                whileHover={{ scale: 1.2 }}
-                className="p-2 rounded-full bg-[#1F2937] hover:bg-[#FF0000] transition-all"
-              >
-                <Youtube className="text-white" size={18} />
-              </motion.div>
-            </a>
+  {/* YouTube */}
+  <a href="https://youtube.com/@furonex?si=N44oUj6OfAEMZ3E-" target="_blank">
+    <motion.div
+      whileHover={{ scale: 1.2 }}
+      className="p-2 rounded-full bg-[#FF0000] 
+                 shadow-md hover:shadow-[0_0_15px_rgba(255,0,0,0.8)] transition-all"
+    >
+      <Youtube className="text-white" size={18} />
+    </motion.div>
+  </a>
 
-            {/* Facebook */}
-            <motion.div
-              whileHover={{ scale: 1.2 }}
-              className="p-2 rounded-full bg-[#1F2937] hover:bg-[#1877F2] transition-all cursor-pointer"
-            >
-              <Facebook className="text-white" size={18} />
-            </motion.div>
+  {/* Facebook */}
+  <motion.div
+    whileHover={{ scale: 1.2 }}
+    className="p-2 rounded-full bg-[#1877F2] 
+               shadow-md hover:shadow-[0_0_15px_rgba(24,119,242,0.8)] transition-all cursor-pointer"
+  >
+    <Facebook className="text-white" size={18} />
+  </motion.div>
 
-          </div>
+</div>
         </div>
 
         {/* 2️⃣ Navigation */}
-        <div>
+        <div className="ml-[140px]">
           <h3 className="font-semibold mb-4">Pages</h3>
 
           <ul className="space-y-2 text-gray-400 text-sm">
