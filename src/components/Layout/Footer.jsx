@@ -101,7 +101,7 @@ const Footer = () => {
         </div>
 
         {/* 2️⃣ Navigation */}
-        <div className="ml-[140px]">
+        <div className="md:ml-[160px]">
           <h3 className="font-semibold mb-4">Pages</h3>
 
           <ul className="space-y-2 text-gray-400 text-sm">

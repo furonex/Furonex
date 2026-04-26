@@ -100,10 +100,12 @@ const Industries = () => {
       in All Domains
     </h2>
 
-    <p className="text-gray-400 max-w-md">
-      We deliver scalable digital solutions across multiple industries,
-      helping businesses grow, innovate and stay ahead in the digital era.
-    </p>
+    <p className="text-gray-400 max-w-md leading-relaxed">
+  We partner with businesses across industries to create impactful digital experiences 
+  that drive real results. From conversion-focused websites to performance marketing, 
+  our approach is built on strategy, data, and execution — helping you attract the right 
+  audience, generate quality leads, and scale confidently.
+</p>
   </div>
 
 </div>

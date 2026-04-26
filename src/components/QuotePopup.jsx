@@ -1,5 +1,6 @@
 import { motion } from "motion/react";
 import { useState } from "react";
+import quoteImg from "../assets/quoteImage.png"; // 👈 add your image
 
 const QuotePopup = ({ isOpen, setIsOpen }) => {
   const [form, setForm] = useState({
@@ -47,18 +48,32 @@ Message: ${form.message}`;
         className="w-full max-w-5xl bg-white rounded-xl shadow-2xl flex flex-col md:flex-row max-h-[90vh] overflow-hidden"
       >
 
-        {/* LEFT SECTION (Hidden on Mobile) */}
+        {/* LEFT SECTION */}
         <div className="hidden md:flex md:w-1/2 bg-gradient-to-br from-[#0A0F1C] to-[#1a2a4a] text-white p-6 flex-col justify-between">
 
+          {/* TOP CONTENT */}
           <div>
             <h2 className="text-3xl font-bold leading-tight">
               Grow Your Business
             </h2>
+
             <p className="mt-3 text-gray-300 text-sm">
               Get expert SEO, Website & Marketing solutions tailored for you.
             </p>
+
+            {/* ✅ IMAGE */}
+            <div className="mt-6 flex justify-center">
+              <motion.img
+                src={quoteImg}
+                alt="Business Growth"
+                className="w-48 lg:w-[300px] object-contain drop-shadow-[0_10px_30px_rgba(0,0,0,0.5)]"
+                animate={{ y: [0, -8, 0] }}
+                transition={{ duration: 3, repeat: Infinity }}
+              />
+            </div>
           </div>
 
+          {/* PRICING BOX */}
           <div className="bg-white/10 backdrop-blur p-4 rounded-lg mt-6">
             <p className="text-sm text-gray-300">Starting From</p>
             <h3 className="text-2xl font-bold text-[#2F80ED]">
@@ -86,7 +101,7 @@ Message: ${form.message}`;
             </button>
           </div>
 
-          {/* SCROLLABLE FORM */}
+          {/* FORM */}
           <div className="p-4 overflow-y-auto flex-1 space-y-3">
 
             <input
@@ -150,7 +165,7 @@ Message: ${form.message}`;
 
           </div>
 
-          {/* STICKY CTA */}
+          {/* CTA */}
           <div className="p-4 border-t bg-white">
             <button
               onClick={sendToWhatsApp}

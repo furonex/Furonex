@@ -1,11 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { motion } from "motion/react";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useLocation } from "react-router-dom";
 import logo from "../../assets/WL-F.png";
 
 const NavBar = ({ setShowPopup }) => {
   const [menuOpen, setMenuOpen] = useState(false);
-  const [serviceOpen, setServiceOpen] = useState(false);
+  const [serviceOpen, setServiceOpen] = useState(false); // desktop
+  const [mobileServiceOpen, setMobileServiceOpen] = useState(false); // mobile
+
+  const serviceRef = useRef(null);
+  const location = useLocation();
 
   const stars = Array.from({ length: 10 });
 
@@ -15,6 +19,27 @@ const NavBar = ({ setShowPopup }) => {
     { name: "SMO", path: "/services/smo" },
     { name: "Digital Marketing", path: "/services/digital-marketing" },
   ];
+
+  // ✅ Close dropdown on outside click
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (serviceRef.current && !serviceRef.current.contains(event.target)) {
+        setServiceOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
+  // ✅ Close dropdown on route change
+  useEffect(() => {
+    setServiceOpen(false);
+    setMobileServiceOpen(false);
+    setMenuOpen(false);
+  }, [location]);
 
   return (
     <motion.nav
@@ -43,7 +68,7 @@ const NavBar = ({ setShowPopup }) => {
       </div>
 
       <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between relative z-10">
-
+        
         {/* Logo */}
         <Link to="/">
           <motion.img
@@ -54,7 +79,7 @@ const NavBar = ({ setShowPopup }) => {
           />
         </Link>
 
-        {/* Desktop Menu (ONLY lg and above) */}
+        {/* Desktop Menu */}
         <ul className="hidden lg:flex gap-6 font-medium items-center">
 
           <li>
@@ -63,10 +88,10 @@ const NavBar = ({ setShowPopup }) => {
             </NavLink>
           </li>
 
-          {/* Services Dropdown (CLICK BASED) */}
-          <li className="relative">
+          {/* Services Dropdown */}
+          <li className="relative" ref={serviceRef}>
             <button
-              onClick={() => setServiceOpen(!serviceOpen)}
+              onClick={() => setServiceOpen((prev) => !prev)}
               className="flex items-center gap-1 hover:text-[#2F80ED]"
             >
               Services ▾
@@ -82,7 +107,6 @@ const NavBar = ({ setShowPopup }) => {
                   <Link
                     key={i}
                     to={service.path}
-                    onClick={() => setServiceOpen(false)}
                     className="block px-4 py-3 text-sm hover:bg-[#1F2937] hover:text-[#2F80ED]"
                   >
                     {service.name}
@@ -92,29 +116,10 @@ const NavBar = ({ setShowPopup }) => {
             )}
           </li>
 
-          <li>
-            <NavLink to="/portfolio" className={({ isActive }) => isActive ? "text-[#2F80ED]" : ""}>
-              Portfolio
-            </NavLink>
-          </li>
-
-          <li>
-            <NavLink to="/about" className={({ isActive }) => isActive ? "text-[#2F80ED]" : ""}>
-              About Us
-            </NavLink>
-          </li>
-
-          <li>
-            <NavLink to="/pricing" className={({ isActive }) => isActive ? "text-[#2F80ED]" : ""}>
-              Pricing
-            </NavLink>
-          </li>
-
-          <li>
-            <NavLink to="/contact" className={({ isActive }) => isActive ? "text-[#2F80ED]" : ""}>
-              Contact
-            </NavLink>
-          </li>
+          <li><NavLink to="/portfolio">Portfolio</NavLink></li>
+          <li><NavLink to="/about">About Us</NavLink></li>
+          <li><NavLink to="/pricing">Pricing</NavLink></li>
+          <li><NavLink to="/contact">Contact</NavLink></li>
         </ul>
 
         {/* Desktop Buttons */}
@@ -137,7 +142,7 @@ const NavBar = ({ setShowPopup }) => {
           </motion.button>
         </div>
 
-        {/* Hamburger (Mobile + Tablet) */}
+        {/* Hamburger */}
         <div
           className="lg:hidden text-2xl cursor-pointer"
           onClick={() => setMenuOpen(!menuOpen)}
@@ -146,7 +151,7 @@ const NavBar = ({ setShowPopup }) => {
         </div>
       </div>
 
-      {/* Mobile + Tablet Menu */}
+      {/* Mobile Menu */}
       {menuOpen && (
         <motion.div
           initial={{ opacity: 0, height: 0 }}
@@ -155,24 +160,20 @@ const NavBar = ({ setShowPopup }) => {
         >
           <ul className="flex flex-col items-center py-4 space-y-4">
 
-            <li><Link to="/" onClick={() => setMenuOpen(false)}>Home</Link></li>
+            <li><Link to="/">Home</Link></li>
 
             {/* Mobile Services */}
             <li className="text-center">
-              <button onClick={() => setServiceOpen(!serviceOpen)}>
+              <button onClick={() => setMobileServiceOpen((prev) => !prev)}>
                 Services ▾
               </button>
 
-              {serviceOpen && (
+              {mobileServiceOpen && (
                 <div className="mt-2 space-y-2">
                   {services.map((service, i) => (
                     <Link
                       key={i}
                       to={service.path}
-                      onClick={() => {
-                        setMenuOpen(false);
-                        setServiceOpen(false);
-                      }}
                       className="block text-sm text-gray-400 hover:text-white"
                     >
                       {service.name}
@@ -182,21 +183,18 @@ const NavBar = ({ setShowPopup }) => {
               )}
             </li>
 
-            <li><Link to="/portfolio" onClick={() => setMenuOpen(false)}>Portfolio</Link></li>
-            <li><Link to="/about" onClick={() => setMenuOpen(false)}>About</Link></li>
-            <li><Link to="/pricing" onClick={() => setMenuOpen(false)}>Pricing</Link></li>
-            <li><Link to="/contact" onClick={() => setMenuOpen(false)}>Contact</Link></li>
+            <li><Link to="/portfolio">Portfolio</Link></li>
+            <li><Link to="/about">About</Link></li>
+            <li><Link to="/pricing">Pricing</Link></li>
+            <li><Link to="/contact">Contact</Link></li>
 
             <button className="bg-[#ed2f2f] px-5 py-2 rounded-lg">
-              <Link to="/game" onClick={() => setMenuOpen(false)}>Game</Link>
+              <Link to="/game">Game</Link>
             </button>
 
             <button
               className="bg-[#2F80ED] px-5 py-2 rounded-lg"
-              onClick={() => {
-                setShowPopup(true);
-                setMenuOpen(false);
-              }}
+              onClick={() => setShowPopup(true)}
             >
               Get Quote
             </button>
