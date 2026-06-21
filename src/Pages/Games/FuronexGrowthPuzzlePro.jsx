@@ -44,7 +44,7 @@ export default function FuronexGrowthPuzzlePro() {
   const [started, setStarted] = useState(false);
   const [level, setLevel] = useState(0);
   const [cards, setCards] = useState([]);
-  const [dragged, setDragged] = useState("");
+  const [selectedCard, setSelectedCard] = useState(null);
   const [correctFound, setCorrectFound] = useState([]);
   const [showUnlock, setShowUnlock] = useState(false);
   const [score, setScore] = useState(0);
@@ -91,27 +91,29 @@ export default function FuronexGrowthPuzzlePro() {
     }
   }, [correctFound]);
 
-  const dropCard = () => {
-    if (!dragged) return;
+  const submitCard = () => {
+  if (!selectedCard) return;
 
-    if (current.correct.includes(dragged)) {
-      setCorrectFound((p) => [...p, dragged]);
-      setCards((p) => p.filter((c) => c !== dragged));
-      setScore((p) => p + 10);
-      setMessage("✅ Correct! +10 XP");
-    } else {
-      setScore((p) => Math.max(0, p - 5));
-      setLives((p) => p - 1);
-      setCards((p) => p.filter((c) => c !== dragged));
-      setMessage("❌ Wrong! -5 XP");
+  if (current.correct.includes(selectedCard)) {
+    setCorrectFound((p) => [...p, selectedCard]);
+    setCards((p) => p.filter((c) => c !== selectedCard));
+    setScore((p) => p + 10);
+    setMessage("✅ Correct! +10 XP");
+  } else {
+    const newLives = lives - 1;
 
-      if (lives <= 1) {
-        setGameOver(true);
-      }
+    setLives(newLives);
+    setScore((p) => Math.max(0, p - 5));
+    setCards((p) => p.filter((c) => c !== selectedCard));
+    setMessage("❌ Wrong! -5 XP");
+
+    if (newLives <= 0) {
+      setGameOver(true);
     }
+  }
 
-    setDragged("");
-  };
+  setSelectedCard(null);
+};
 
   const nextLevel = () => {
     setShowUnlock(false);
@@ -139,7 +141,8 @@ export default function FuronexGrowthPuzzlePro() {
           <ol className="space-y-3 text-gray-300 list-decimal ml-6">
             <li>Each level focuses on one business category.</li>
             <li>8 cards appear (4 correct + 4 wrong).</li>
-            <li>Drag cards into the drop zone.</li>
+            <li>Tap a card to select it.</li>
+                  <li>Press Submit Answer.</li>
             <li>Correct cards earn +10 XP.</li>
             <li>Wrong cards lose 1 life and -5 XP.</li>
             <li>You have 3 lives.</li>
@@ -234,14 +237,20 @@ export default function FuronexGrowthPuzzlePro() {
 
               <div className="grid gap-3">
                 {cards.map((card) => (
-                  <div
-                    key={card}
-                    draggable
-                    onDragStart={() => setDragged(card)}
-                    className="bg-white text-black p-4 rounded-xl cursor-grab"
-                  >
-                    {card}
-                  </div>
+                  <button
+                      key={card}
+                      onClick={() => setSelectedCard(card)}
+                      className={`
+                        p-4 rounded-xl transition-all text-left font-medium
+                        ${
+                          selectedCard === card
+                            ? "bg-cyan-500 text-white scale-105"
+                            : "bg-white text-black"
+                        }
+                      `}
+                    >
+                      {card}
+                    </button>
                 ))}
               </div>
             </div>
@@ -251,13 +260,25 @@ export default function FuronexGrowthPuzzlePro() {
                 Drop Zone
               </h2>
 
-              <div
-                onDragOver={(e) => e.preventDefault()}
-                onDrop={dropCard}
-                className="border-2 border-dashed border-cyan-500 rounded-3xl min-h-[300px] flex items-center justify-center"
-              >
-                Drop cards related to {current.title}
-              </div>
+             <div className="border-2 border-dashed border-cyan-500 rounded-3xl min-h-[300px] flex flex-col items-center justify-center p-6">
+
+                      <p className="mb-4 text-center">
+                        Selected Card
+                      </p>
+
+                      <div className="bg-white/10 rounded-xl p-4 min-w-[220px] text-center mb-6">
+                        {selectedCard || "Tap a card first"}
+                      </div>
+
+                      <button
+                        onClick={submitCard}
+                        disabled={!selectedCard}
+                        className="bg-cyan-500 px-6 py-3 rounded-xl disabled:opacity-50"
+                      >
+                        Submit Answer
+                      </button>
+
+                    </div>
 
               <div className="mt-4 space-y-2">
                 {correctFound.map((item) => (
