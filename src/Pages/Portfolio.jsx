@@ -4,53 +4,144 @@ const Portfolio = () => {
   const stars = Array.from({ length: 20 });
 
   const services = [
-    {
-      title: "Website Development",
-      projects: [
+  {
+    title: "Website Development",
+    projects: [
       {
-         name: "Shavide", url: "https://www.shavide.com/", border: "border-cyan-500", glow: "hover:shadow-[0_0_35px_rgba(6,182,212,0.35)]", },
-          { name: "Braventa Infra", url: "https://www.braventainfra.com/", border: "border-pink-500", glow: "hover:shadow-[0_0_35px_rgba(255,120,180,0.35)]", },
-           { name: "Instant Doc Solution", url: "https://instantdocsolution.in/", border: "border-purple-500", glow: "hover:shadow-[0_0_35px_rgba(140,120,255,0.4)]", }, 
-           { name: "Ankit Electrical", url: "https://ankitelectrical.com/", border: "border-green-500", glow: "hover:shadow-[0_0_35px_rgba(34,197,94,0.35)]", }, 
-           { name: "Yuvi Driving School", url: "https://yuvidrivingschool.in/", border: "border-yellow-500", glow: "hover:shadow-[0_0_35px_rgba(234,179,8,0.35)]", }, 
-           { name: "MS99 Realty", url: "https://www.ms99realty.com/", border: "border-blue-500", glow: "hover:shadow-[0_0_35px_rgba(47,128,237,0.4)]", },
-      ],
-    },
-    {
-      title: "SEO Services",
-      projects: [
-        {
-          name: "SEO Case Study (Demo)",
-          url: "#",
-          border: "border-green-500",
-          glow: "hover:shadow-[0_0_35px_rgba(34,197,94,0.35)]",
-        },
-        {
-          name: "Local SEO Project (Coming Soon)",
-          url: "#",
-          border: "border-lime-500",
-          glow: "hover:shadow-[0_0_35px_rgba(132,204,22,0.35)]",
-        },
-      ],
-    },
-    {
-      title: "Digital Marketing",
-      projects: [
-        {
-          name: "Instagram Growth Campaign (Demo)",
-          url: "#",
-          border: "border-yellow-500",
-          glow: "hover:shadow-[0_0_35px_rgba(234,179,8,0.35)]",
-        },
-        {
-          name: "Ad Campaign Sample (Coming Soon)",
-          url: "#",
-          border: "border-orange-500",
-          glow: "hover:shadow-[0_0_35px_rgba(249,115,22,0.35)]",
-        },
-      ],
-    },
-  ];
+        name: "Shavide",
+        url: "https://www.shavide.com/",
+        border: "border-cyan-500",
+        glow: "hover:shadow-[0_0_35px_rgba(6,182,212,0.35)]",
+      },
+      {
+        name: "Braventa Infra",
+        url: "https://www.braventainfra.com/",
+        border: "border-pink-500",
+        glow: "hover:shadow-[0_0_35px_rgba(255,120,180,0.35)]",
+      },
+      {
+        name: "Instant Doc Solution",
+        url: "https://instantdocsolution.in/",
+        border: "border-purple-500",
+        glow: "hover:shadow-[0_0_35px_rgba(140,120,255,0.4)]",
+      },
+      {
+        name: "Ankit Electrical",
+        url: "https://ankitelectrical.com/",
+        border: "border-green-500",
+        glow: "hover:shadow-[0_0_35px_rgba(34,197,94,0.35)]",
+      },
+      {
+        name: "Yuvi Driving School",
+        url: "https://yuvidrivingschool.in/",
+        border: "border-yellow-500",
+        glow: "hover:shadow-[0_0_35px_rgba(234,179,8,0.35)]",
+      },
+      {
+        name: "MS99 Realty",
+        url: "https://www.ms99realty.com/",
+        border: "border-blue-500",
+        glow: "hover:shadow-[0_0_35px_rgba(47,128,237,0.4)]",
+      },
+      {
+        name: "Gaur Bento",
+        url: "https://gaursproperty.com/Gaur_Bento/",
+        border: "border-cyan-500",
+        glow: "hover:shadow-[0_0_35px_rgba(6,182,212,0.35)]",
+      },
+      {
+        name: "Godrej Arden",
+        url: "https://godrejlaunches.com/godrej-arden/",
+        border: "border-green-500",
+        glow: "hover:shadow-[0_0_35px_rgba(34,197,94,0.35)]",
+      },
+      {
+        name: "Gaur Leisure Park",
+        url: "https://gaursproperty.com/gaur-leisure-park/",
+        border: "border-yellow-500",
+        glow: "hover:shadow-[0_0_35px_rgba(234,179,8,0.35)]",
+      },
+      {
+        name: "Godrej Sarjapur",
+        url: "https://godrejlaunches.com/godrej-sarjapur/",
+        border: "border-purple-500",
+        glow: "hover:shadow-[0_0_35px_rgba(168,85,247,0.35)]",
+      },
+      {
+        name: "Godrej Samaris Gurgaon",
+        url: "https://godrejlaunches.com/godrej-samaris-gurgaon/",
+        border: "border-pink-500",
+        glow: "hover:shadow-[0_0_35px_rgba(236,72,153,0.35)]",
+      },
+      {
+        name: "Godrej Kukatpally Hyderabad",
+        url: "https://godrejlaunches.com/kukatpally-hyderabad/",
+        border: "border-red-500",
+        glow: "hover:shadow-[0_0_35px_rgba(239,68,68,0.35)]",
+      },
+      {
+        name: "Godrej Crown Residences",
+        url: "https://godrejlaunches.com/godrej-crown-residences/index.html",
+        border: "border-orange-500",
+        glow: "hover:shadow-[0_0_35px_rgba(249,115,22,0.35)]",
+      },
+      {
+        name: "Max Estate 361",
+        url: "https://maxestatenewproject.com/terraces-estate-361/",
+        border: "border-indigo-500",
+        glow: "hover:shadow-[0_0_35px_rgba(99,102,241,0.35)]",
+      },
+      {
+        name: "Raheja Jade City",
+        url: "https://krahejalaunches.com/raheja-jade-city/",
+        border: "border-emerald-500",
+        glow: "hover:shadow-[0_0_35px_rgba(16,185,129,0.35)]",
+      },
+      {
+        name: "ACE Noida Sector 150",
+        url: "https://acenoidasector150.com/",
+        border: "border-sky-500",
+        glow: "hover:shadow-[0_0_35px_rgba(14,165,233,0.35)]",
+      },
+    ],
+  },
+
+  {
+    title: "SEO Services",
+    projects: [
+      {
+        name: "SEO Case Study (Demo)",
+        url: "#",
+        border: "border-green-500",
+        glow: "hover:shadow-[0_0_35px_rgba(34,197,94,0.35)]",
+      },
+      {
+        name: "Local SEO Project (Coming Soon)",
+        url: "#",
+        border: "border-lime-500",
+        glow: "hover:shadow-[0_0_35px_rgba(132,204,22,0.35)]",
+      },
+    ],
+  },
+
+  {
+    title: "Digital Marketing",
+    projects: [
+      {
+        name: "Instagram Growth Campaign (Demo)",
+        url: "#",
+        border: "border-yellow-500",
+        glow: "hover:shadow-[0_0_35px_rgba(234,179,8,0.35)]",
+      },
+      {
+        name: "Ad Campaign Sample (Coming Soon)",
+        url: "#",
+        border: "border-orange-500",
+        glow: "hover:shadow-[0_0_35px_rgba(249,115,22,0.35)]",
+      },
+    ],
+  },
+];
 
   return (
     <section className="relative min-h-screen bg-[#0A0F1C] py-24 px-6 text-white overflow-hidden">
@@ -94,7 +185,7 @@ const Portfolio = () => {
             </h2>
 
             {/* Cards */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
 
               {service.projects.map((project, i) => (
                 <motion.a
