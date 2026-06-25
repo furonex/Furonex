@@ -1,227 +1,357 @@
+import { useState } from "react";
 import { motion } from "motion/react";
 
+import braventa from "/portfolio/braventa.png";
+import instantdoc from "/portfolio/instantdoc.png";
+
 const Portfolio = () => {
-  const stars = Array.from({ length: 20 });
+  const [activeFilter, setActiveFilter] = useState("All");
 
-  const services = [
-  {
-    title: "Website Development",
-    projects: [
-      {
-        name: "Shavide",
-        url: "https://www.shavide.com/",
-        border: "border-cyan-500",
-        glow: "hover:shadow-[0_0_35px_rgba(6,182,212,0.35)]",
-      },
-      {
-        name: "Braventa Infra",
-        url: "https://www.braventainfra.com/",
-        border: "border-pink-500",
-        glow: "hover:shadow-[0_0_35px_rgba(255,120,180,0.35)]",
-      },
-      {
-        name: "Instant Doc Solution",
-        url: "https://instantdocsolution.in/",
-        border: "border-purple-500",
-        glow: "hover:shadow-[0_0_35px_rgba(140,120,255,0.4)]",
-      },
-      {
-        name: "Ankit Electrical",
-        url: "https://ankitelectrical.com/",
-        border: "border-green-500",
-        glow: "hover:shadow-[0_0_35px_rgba(34,197,94,0.35)]",
-      },
-      {
-        name: "Yuvi Driving School",
-        url: "https://yuvidrivingschool.in/",
-        border: "border-yellow-500",
-        glow: "hover:shadow-[0_0_35px_rgba(234,179,8,0.35)]",
-      },
-      {
-        name: "MS99 Realty",
-        url: "https://www.ms99realty.com/",
-        border: "border-blue-500",
-        glow: "hover:shadow-[0_0_35px_rgba(47,128,237,0.4)]",
-      },
-      {
-        name: "Gaur Bento",
-        url: "https://gaursproperty.com/Gaur_Bento/",
-        border: "border-cyan-500",
-        glow: "hover:shadow-[0_0_35px_rgba(6,182,212,0.35)]",
-      },
-      {
-        name: "Godrej Arden",
-        url: "https://godrejlaunches.com/godrej-arden/",
-        border: "border-green-500",
-        glow: "hover:shadow-[0_0_35px_rgba(34,197,94,0.35)]",
-      },
-      {
-        name: "Gaur Leisure Park",
-        url: "https://gaursproperty.com/gaur-leisure-park/",
-        border: "border-yellow-500",
-        glow: "hover:shadow-[0_0_35px_rgba(234,179,8,0.35)]",
-      },
-      {
-        name: "Godrej Sarjapur",
-        url: "https://godrejlaunches.com/godrej-sarjapur/",
-        border: "border-purple-500",
-        glow: "hover:shadow-[0_0_35px_rgba(168,85,247,0.35)]",
-      },
-      {
-        name: "Godrej Samaris Gurgaon",
-        url: "https://godrejlaunches.com/godrej-samaris-gurgaon/",
-        border: "border-pink-500",
-        glow: "hover:shadow-[0_0_35px_rgba(236,72,153,0.35)]",
-      },
-      {
-        name: "Godrej Kukatpally Hyderabad",
-        url: "https://godrejlaunches.com/kukatpally-hyderabad/",
-        border: "border-red-500",
-        glow: "hover:shadow-[0_0_35px_rgba(239,68,68,0.35)]",
-      },
-      {
-        name: "Godrej Crown Residences",
-        url: "https://godrejlaunches.com/godrej-crown-residences/index.html",
-        border: "border-orange-500",
-        glow: "hover:shadow-[0_0_35px_rgba(249,115,22,0.35)]",
-      },
-      {
-        name: "Max Estate 361",
-        url: "https://maxestatenewproject.com/terraces-estate-361/",
-        border: "border-indigo-500",
-        glow: "hover:shadow-[0_0_35px_rgba(99,102,241,0.35)]",
-      },
-      {
-        name: "Raheja Jade City",
-        url: "https://krahejalaunches.com/raheja-jade-city/",
-        border: "border-emerald-500",
-        glow: "hover:shadow-[0_0_35px_rgba(16,185,129,0.35)]",
-      },
-      {
-        name: "ACE Noida Sector 150",
-        url: "https://acenoidasector150.com/",
-        border: "border-sky-500",
-        glow: "hover:shadow-[0_0_35px_rgba(14,165,233,0.35)]",
-      },
-    ],
-  },
+  const stats = [
+    { value: "40+", label: "Projects Delivered" },
+    { value: "20+", label: "Happy Clients" },
+    { value: "95%", label: "Client Satisfaction" },
+    { value: "4+", label: "Years Experience" },
+  ];
 
-  {
-    title: "SEO Services",
-    projects: [
-      {
-        name: "SEO Case Study (Demo)",
-        url: "#",
-        border: "border-green-500",
-        glow: "hover:shadow-[0_0_35px_rgba(34,197,94,0.35)]",
-      },
-      {
-        name: "Local SEO Project (Coming Soon)",
-        url: "#",
-        border: "border-lime-500",
-        glow: "hover:shadow-[0_0_35px_rgba(132,204,22,0.35)]",
-      },
-    ],
-  },
+  
 
-  {
-    title: "Digital Marketing",
-    projects: [
-      {
-        name: "Instagram Growth Campaign (Demo)",
-        url: "#",
-        border: "border-yellow-500",
-        glow: "hover:shadow-[0_0_35px_rgba(234,179,8,0.35)]",
-      },
-      {
-        name: "Ad Campaign Sample (Coming Soon)",
-        url: "#",
-        border: "border-orange-500",
-        glow: "hover:shadow-[0_0_35px_rgba(249,115,22,0.35)]",
-      },
-    ],
-  },
-];
+  const projects = [
+    {
+      name: "Shavide",
+      url: "https://www.shavide.com/",
+      category: "Website",
+      image: "/portfolio/shavide.jpg",
+      featured: true,
+      tags: ["React", "SEO", "Responsive"],
+    },
+    {
+      name: "Braventa Infra",
+      url: "https://www.braventainfra.com/",
+      category: "Website",
+      image: "/portfolio/braventa.png",
+      featured: true,
+      tags: ["Real Estate", "Lead Generation"],
+    },
+    {
+      name: "Instant Doc Solution",
+      url: "https://instantdocsolution.in/",
+      category: "Website",
+      image: "/portfolio/instantdoc.png",
+      featured: true,
+      tags: ["Healthcare", "SEO"],
+    },
+    {
+      name: "Ankit Electrical",
+      url: "https://ankitelectrical.com/",
+      category: "Website",
+      image: "/portfolio/ankit.png",
+      tags: ["Business Website"],
+    },
+    {
+      name: "Yuvi Driving School",
+      url: "https://yuvidrivingschool.in/",
+      category: "Website",
+      image: "/portfolio/yuvi.png",
+      tags: ["Landing Page"],
+    },
+    {
+      name: "MS99 Realty",
+      url: "https://www.ms99realty.com/",
+      category: "Website",
+      image: "/portfolio/ms99.png",
+      tags: ["Real Estate"],
+    },
+    {
+      name: "Gaur Bento",
+      url: "https://gaursproperty.com/Gaur_Bento/",
+      category: "Website",
+      image: "/portfolio/gaurbento.png",
+      tags: ["Real Estate"],
+    },
+    {
+      name: "Godrej Arden",
+      url: "https://godrejlaunches.com/godrej-arden/",
+      category: "Website",
+      image: "/portfolio/godrejarden.png",
+      tags: ["Property"],
+    },
+    {
+      name: "SEO Growth Campaign",
+      url: "#",
+      category: "SEO",
+      image: "/portfolio/seo1.jpg",
+      tags: ["Ranking", "Traffic"],
+    },
+    {
+      name: "Local SEO Project",
+      url: "#",
+      category: "SEO",
+      image: "/portfolio/seo2.jpg",
+      tags: ["Google Maps"],
+    },
+    {
+      name: "Instagram Campaign",
+      url: "#",
+      category: "Marketing",
+      image: "/portfolio/marketing1.jpg",
+      tags: ["Social Media"],
+    },
+  ];
+
+  const filters = ["All", "Website", "SEO", "Marketing"];
+
+  const filteredProjects =
+    activeFilter === "All"
+      ? projects
+      : projects.filter(
+          (project) => project.category === activeFilter
+        );
+
+  const featuredProjects = projects.filter(
+    (project) => project.featured
+  );
 
   return (
-    <section className="relative min-h-screen bg-[#0A0F1C] py-24 px-6 text-white overflow-hidden">
+    <section
+      id="portfolio"
+      className="bg-[#0A0F1C] text-white py-24 px-6"
+    >
+      <div className="max-w-7xl mx-auto">
 
-      {/* Stars */}
-      {stars.map((_, i) => (
-        <motion.div
-          key={i}
-          className="absolute w-[2px] h-[2px] bg-white rounded-full"
-          style={{
-            top: `${Math.random() * 100}%`,
-            left: `${Math.random() * 100}%`,
-          }}
-          animate={{ opacity: [0.3, 1, 0.3] }}
-          transition={{
-            duration: 2 + Math.random() * 2,
-            repeat: Infinity,
-          }}
-        />
-      ))}
+        {/* Heading */}
+        <div className="text-center mb-20">
+          <span className="text-[#2F80ED] font-medium">
+            OUR WORK
+          </span>
 
-      {/* Heading */}
-      <div className="text-center mb-20 relative z-10">
-        <h1 className="text-4xl md:text-6xl font-bold mb-4">
-          Our Portfolio
-        </h1>
-        <p className="text-gray-400 text-lg">
-          Services & proven work 🚀
-        </p>
-      </div>
+          <h2 className="text-4xl md:text-6xl font-bold mt-3">
+            Projects That Drive Growth
+          </h2>
 
-      {/* Services Sections */}
-      <div className="max-w-6xl mx-auto space-y-20 relative z-10">
+          <p className="text-gray-400 mt-5 max-w-2xl mx-auto">
+            We build high-converting websites, SEO campaigns,
+            and digital experiences that help businesses grow.
+          </p>
+        </div>
 
-        {services.map((service, index) => (
-          <div key={index}>
+        {/* Stats */}
+        <div className="grid md:grid-cols-4 gap-6 mb-24">
+          {stats.map((item, i) => (
+            <motion.div
+              key={i}
+              whileHover={{ y: -8 }}
+              className="bg-[#111827] border border-[#1f2937]
+              rounded-2xl p-8 text-center"
+            >
+              <h3 className="text-4xl font-bold text-[#2F80ED]">
+                {item.value}
+              </h3>
 
-            {/* Service Title */}
-            <h2 className="text-2xl md:text-3xl font-semibold mb-10 text-center">
-              {service.title}
-            </h2>
+              <p className="text-gray-400 mt-3">
+                {item.label}
+              </p>
+            </motion.div>
+          ))}
+        </div>
 
-            {/* Cards */}
-           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+        {/* Featured Projects */}
+        <div className="mb-24">
+          <h3 className="text-3xl font-bold mb-10 text-center">
+            Featured Projects
+          </h3>
 
-              {service.projects.map((project, i) => (
-                <motion.a
-                  key={i}
-                  href={project.url}
-                  target="_blank"
-                  rel="noreferrer"
-                  initial={{ opacity: 0, y: 40 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: i * 0.1 }}
-                  whileHover={{ scale: 1.05 }}
-                  className={`
-                    bg-[#111827] p-6 rounded-2xl border-2 ${project.border}
-                    ${project.glow}
-                    transition-all duration-300
-                  `}
-                >
-                  <h3 className="text-xl font-semibold mb-3">
+          <div className="grid lg:grid-cols-3 gap-8">
+            {featuredProjects.map((project, i) => (
+              <motion.a
+                key={i}
+                href={project.url}
+                target="_blank"
+                rel="noreferrer"
+                whileHover={{ y: -8 }}
+                className="group bg-[#111827]
+                rounded-3xl overflow-hidden
+                border border-gray-800"
+              >
+                <div className="relative h-56 overflow-hidden">
+
+                  <img
+                    src={project.image}
+                    alt={project.name}
+                    className="w-full h-full object-cover
+                    transition duration-500
+                    group-hover:scale-110"
+                  />
+
+                  <div className="absolute top-4 right-4">
+                    <span
+                      className="
+                      bg-green-500/20
+                      text-green-400
+                      px-3 py-1
+                      rounded-full
+                      text-xs
+                    "
+                    >
+                      Live Project
+                    </span>
+                  </div>
+                </div>
+
+                <div className="p-6">
+
+                  <h4 className="text-2xl font-semibold">
                     {project.name}
-                  </h3>
+                  </h4>
 
-                  <p className="text-gray-400 text-sm mb-4">
-                    {project.url === "#" ? "View Details →" : "Visit Website →"}
+                  <p className="text-gray-400 mt-2">
+                    {project.category}
                   </p>
 
-                  <div className="text-[#2F80ED] text-sm break-all">
-                    {project.url !== "#" 
-                      ? project.url.replace("https://", "") 
-                      : "Case Study"}
+                  <div className="flex flex-wrap gap-2 mt-5">
+                    {project.tags.map((tag, idx) => (
+                      <span
+                        key={idx}
+                        className="
+                        px-3 py-1
+                        rounded-full
+                        text-xs
+                        bg-[#1F2937]
+                        text-gray-300
+                      "
+                      >
+                        {tag}
+                      </span>
+                    ))}
                   </div>
-                </motion.a>
-              ))}
 
-            </div>
+                  <div className="mt-6 text-[#2F80ED]">
+                    Visit Website →
+                  </div>
+                </div>
+              </motion.a>
+            ))}
           </div>
-        ))}
+        </div>
+
+        {/* Filter Buttons */}
+        <div className="flex flex-wrap justify-center gap-4 mb-14">
+          {filters.map((filter) => (
+            <button
+              key={filter}
+              onClick={() => setActiveFilter(filter)}
+              className={`px-6 py-3 rounded-full transition
+              ${
+                activeFilter === filter
+                  ? "bg-[#2F80ED] text-white"
+                  : "bg-[#111827] text-gray-400"
+              }`}
+            >
+              {filter}
+            </button>
+          ))}
+        </div>
+
+        {/* Portfolio Grid */}
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+          {filteredProjects.map((project, i) => (
+            <motion.a
+              key={i}
+              href={project.url}
+              target="_blank"
+              rel="noreferrer"
+              whileHover={{ y: -8 }}
+              className="
+              bg-[#111827]
+              border border-gray-800
+              rounded-3xl
+              overflow-hidden
+              group
+            "
+            >
+              <div className="h-52 overflow-hidden">
+                <img
+                  src={project.image}
+                  alt={project.name}
+                  className="
+                  w-full h-full object-cover
+                  transition duration-500
+                  group-hover:scale-110
+                "
+                />
+              </div>
+
+              <div className="p-6">
+
+                <h4 className="text-xl font-semibold">
+                  {project.name}
+                </h4>
+
+                <p className="text-gray-400 mt-2">
+                  {project.category}
+                </p>
+
+                <div className="flex flex-wrap gap-2 mt-4">
+                  {project.tags.map((tag, idx) => (
+                    <span
+                      key={idx}
+                      className="
+                      text-xs
+                      px-2 py-1
+                      rounded-full
+                      bg-[#1F2937]
+                    "
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+
+                <div className="mt-5 text-[#2F80ED]">
+                  View Project →
+                </div>
+              </div>
+            </motion.a>
+          ))}
+        </div>
+
+        {/* CTA */}
+        <div
+          className="
+          mt-28
+          text-center
+          bg-gradient-to-r
+          from-[#111827]
+          to-[#0f172a]
+          rounded-3xl
+          p-12
+        "
+        >
+          <h3 className="text-4xl font-bold">
+            Ready To Grow Your Business?
+          </h3>
+
+          <p className="text-gray-400 mt-4">
+            Let's build a website, SEO strategy, or marketing
+            campaign that generates results.
+          </p>
+
+          <button
+            className="
+            mt-8
+            bg-[#2F80ED]
+            px-8
+            py-4
+            rounded-full
+            font-medium
+            hover:scale-105
+            transition
+          "
+          >
+            Book Free Consultation
+          </button>
+        </div>
 
       </div>
     </section>
