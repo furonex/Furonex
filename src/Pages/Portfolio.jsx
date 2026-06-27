@@ -3,6 +3,7 @@ import { motion } from "motion/react";
 
 import braventa from "/portfolio/braventa.png";
 import instantdoc from "/portfolio/instantdoc.png";
+import Gordrejarden from "/portfolio/gordrejarden.png";
 
 const Portfolio = () => {
   const [activeFilter, setActiveFilter] = useState("All");
@@ -73,7 +74,7 @@ const Portfolio = () => {
       name: "Godrej Arden",
       url: "https://godrejlaunches.com/godrej-arden/",
       category: "Website",
-      image: "/portfolio/godrejarden.png",
+      image: "/portfolio/gordrejarden.png",
       tags: ["Property"],
     },
     {
