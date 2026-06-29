@@ -25,6 +25,8 @@ const Portfolio = () => {
       image: "/portfolio/shavide.jpg",
       featured: true,
       tags: ["React", "SEO", "Responsive"],
+      hover:"hover:border-pink-400",
+      hoverShadow:"hover:shadow-[0_0_35px_rgba(255,105,180,0.4)]"
     },
     {
       name: "Braventa Infra",
@@ -33,6 +35,8 @@ const Portfolio = () => {
       image: "/portfolio/braventa.png",
       featured: true,
       tags: ["Real Estate", "Lead Generation"],
+       hover: "hover:border-cyan-400",
+    hoverShadow: "hover:shadow-[0_0_35px_rgba(34,211,238,0.4)]"
     },
     {
       name: "Instant Doc Solution",
@@ -41,6 +45,8 @@ const Portfolio = () => {
       image: "/portfolio/instantdoc.png",
       featured: true,
       tags: ["Healthcare", "SEO"],
+       hover: "hover:border-purple-400",
+    hoverShadow: "hover:shadow-[0_0_35px_rgba(168,85,247,0.4)]",
     },
     {
       name: "Ankit Electrical",
@@ -48,6 +54,8 @@ const Portfolio = () => {
       category: "Website",
       image: "/portfolio/ankit.png",
       tags: ["Business Website"],
+      hover: "hover:border-emerald-400",
+    hoverShadow: "hover:shadow-[0_0_35px_rgba(52,211,153,0.4)]",
     },
     {
       name: "Yuvi Driving School",
@@ -55,6 +63,8 @@ const Portfolio = () => {
       category: "Website",
       image: "/portfolio/yuvi.png",
       tags: ["Landing Page"],
+      hover: "hover:border-orange-400",
+    hoverShadow: "hover:shadow-[0_0_35px_rgba(251,146,60,0.4)]",
     },
     {
       name: "MS99 Realty",
@@ -62,6 +72,8 @@ const Portfolio = () => {
       category: "Website",
       image: "/portfolio/ms99.png",
       tags: ["Real Estate"],
+      hover: "hover:border-yellow-400",
+    hoverShadow: "hover:shadow-[0_0_35px_rgba(250,204,21,0.4)]",
     },
     {
       name: "Gaur Bento",
@@ -69,6 +81,8 @@ const Portfolio = () => {
       category: "Website",
       image: "/portfolio/gaurbento.png",
       tags: ["Real Estate"],
+      hover: "hover:border-red-400",
+    hoverShadow: "hover:shadow-[0_0_35px_rgba(248,113,113,0.4)]",
     },
     {
       name: "Godrej Arden",
@@ -76,6 +90,8 @@ const Portfolio = () => {
       category: "Website",
       image: "/portfolio/gordrejarden.png",
       tags: ["Property"],
+      hover: "hover:border-indigo-400",
+    hoverShadow: "hover:shadow-[0_0_35px_rgba(129,140,248,0.4)]",
     },
     {
       name: "SEO Growth Campaign",
@@ -83,6 +99,8 @@ const Portfolio = () => {
       category: "SEO",
       image: "/portfolio/seo1.jpg",
       tags: ["Ranking", "Traffic"],
+      hover: "hover:border-sky-400",
+  hoverShadow: "hover:shadow-[0_0_35px_rgba(56,189,248,0.4)]",
     },
     {
       name: "Local SEO Project",
@@ -90,6 +108,8 @@ const Portfolio = () => {
       category: "SEO",
       image: "/portfolio/seo2.jpg",
       tags: ["Google Maps"],
+      hover: "hover:border-violet-400",
+  hoverShadow: "hover:shadow-[0_0_35px_rgba(167,139,250,0.4)]",
     },
     {
       name: "Instagram Campaign",
@@ -97,6 +117,8 @@ const Portfolio = () => {
       category: "Marketing",
       image: "/portfolio/marketing1.jpg",
       tags: ["Social Media"],
+      hover: "hover:border-rose-400",
+  hoverShadow: "hover:shadow-[0_0_35px_rgba(251,113,133,0.4)]",
     },
   ];
 
@@ -170,9 +192,12 @@ const Portfolio = () => {
                 target="_blank"
                 rel="noreferrer"
                 whileHover={{ y: -8 }}
-                className="group bg-[#111827]
+                className={`group bg-[#111827]
                 rounded-3xl overflow-hidden
-                border border-gray-800"
+                border border-gray-800
+                ${project.hover}
+                ${project.hoverShadow}
+                `}
               >
                 <div className="relative h-56 overflow-hidden">
 
@@ -263,13 +288,15 @@ const Portfolio = () => {
               target="_blank"
               rel="noreferrer"
               whileHover={{ y: -8 }}
-              className="
+              className={`
               bg-[#111827]
               border border-gray-800
               rounded-3xl
               overflow-hidden
-              group
-            "
+              group 
+               ${project.hover}
+                ${project.hoverShadow}
+            `}
             >
               <div className="h-52 overflow-hidden">
                 <img
