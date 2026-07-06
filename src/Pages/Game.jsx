@@ -1,16 +1,11 @@
 import React from 'react'
-import EyeTestChallenge from './Games/EyeTestChallenge'
-import FuronexGrowthChallenge from './Games/FuronexGrowthChallenge'
-import FuronexGrowthPuzzle from './Games/FuronexGrowthPuzzle'
-import FuronexGrowthPuzzlePro from './Games/FuronexGrowthPuzzlePro'
+import BlockBlast from './Games/BlockBlast'
+
 
 const Game = () => {
   return (
     <>
-     <FuronexGrowthChallenge/>
-     <FuronexGrowthPuzzlePro/>
-    <EyeTestChallenge/>
-   
+   <BlockBlast/>
     </>
   )
 }
